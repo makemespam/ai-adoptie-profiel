@@ -1,5 +1,5 @@
 import ResultaatPagina from "@/components/ResultaatPagina";
-import { buildScoresFromAnswers, decodeVToAnswers } from "@/lib/report-url";
+import { buildScoresFromAnswers, decodeIntakeAnswer, decodeVToAnswers } from "@/lib/report-url";
 
 type ScorePayload = {
   lef: { label: string; score: number; vragen: number[] };
@@ -9,13 +9,13 @@ type ScorePayload = {
 };
 
 type ResultaatRouteProps = {
-  searchParams: Promise<{ data?: string; v?: string; n?: string; e?: string }>;
+  searchParams: Promise<{ data?: string; v?: string; n?: string; e?: string; i?: string; g?: string }>;
 };
 
 export default async function ResultaatRoute({ searchParams }: ResultaatRouteProps) {
   const params = await searchParams;
   const encoded = params?.data;
-  let payload: { naam?: string; email?: string; scores?: ScorePayload; answers?: number[] } = {};
+  let payload: { naam?: string; email?: string; scores?: ScorePayload; answers?: number[]; intakeAnswer?: "ja" | "nee" | "deels" | null; gespreksopener?: string } = {};
 
   if (params?.v) {
     const parsedAnswers = decodeVToAnswers(params.v);
@@ -25,6 +25,8 @@ export default async function ResultaatRoute({ searchParams }: ResultaatRoutePro
         email: params.e ?? "",
         answers: parsedAnswers,
         scores: buildScoresFromAnswers(parsedAnswers),
+        intakeAnswer: decodeIntakeAnswer(params.i),
+        gespreksopener: params?.g ? decodeURIComponent(params.g) : "",
       };
     }
   } else if (encoded) {
@@ -40,6 +42,8 @@ export default async function ResultaatRoute({ searchParams }: ResultaatRoutePro
       naam={payload.naam ?? ""}
       email={payload.email ?? ""}
       answers={payload.answers ?? []}
+      intakeAnswer={payload.intakeAnswer ?? null}
+      gespreksopener={payload.gespreksopener ?? ""}
     />
   );
 }

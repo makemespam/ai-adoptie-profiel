@@ -1,16 +1,16 @@
 export const vraagLabels: Record<string, string> = {
-  V1: "Experimenteerruimte",
-  V2: "Bereidheid tot verandering",
-  V3: "Psychologische veiligheid rond AI",
-  V4: "Procesduidelijkheid",
-  V5: "Basiskennis & tooling",
-  V6: "Data & informatiehygiene",
-  V7: "Intrinsieke motivatie",
-  V8: "Eigenaarschap & trekkers",
-  V9: "Capaciteit & ruimte",
-  V10: "Strategische visie",
-  V11: "Leiderschap & voorbeeldgedrag",
-  V12: "Ethiek & menselijke regie",
+  V1: "Leren of vinkje?",
+  V2: "Eerlijk durven zijn",
+  V3: "Bedreiging of rugwind?",
+  V4: "Weten waar de winst zit",
+  V5: "Routine of curiositeit?",
+  V6: "Veilig en helder gebruik",
+  V7: "Gefaciliteerd of scharrelend?",
+  V8: "Trekkers op de werkvloer",
+  V9: "De manager als brug of blokkade",
+  V10: "Leiderschap met handen aan de knoppen",
+  V11: "Van directiekamer naar werkvloer",
+  V12: "Kaders als versneller, niet als rem",
 };
 
 export const kwadrantLabels = {

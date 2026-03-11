@@ -4,12 +4,12 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { getAnchorForScore, getScoreLabel, quadrants, questions } from "@/lib/scan-config";
-import { encodeAnswersToV } from "@/lib/report-url";
+import { getAnchorForScore, getScoreLabel, intakeQuestion, gespreksopenerQuestion, quadrants, questions } from "@/lib/scan-config";
+import { encodeAnswersToV, encodeIntakeAnswer, type IntakeAnswer } from "@/lib/report-url";
 import { uitlegCopy } from "@/lib/copy";
 import Logo from "@/components/Logo";
 
-type Step = "welcome" | "questions" | "lead";
+type Step = "welcome" | "intake" | "questions" | "gespreksopener" | "lead";
 
 type Lead = {
   name: string;
@@ -29,8 +29,10 @@ const accentHover = "#2D7A3A";
 export default function Home() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("welcome");
+  const [intakeAnswer, setIntakeAnswer] = useState<IntakeAnswer | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>(Array.from({ length: questions.length }, () => 5));
+  const [gespreksopenerText, setGespreksopenerText] = useState("");
   const [lead, setLead] = useState<Lead>({ name: "", email: "" });
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
@@ -42,31 +44,42 @@ export default function Home() {
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex === questions.length - 1) {
-      setStep("lead");
+      setStep("gespreksopener");
       return;
     }
     setCurrentQuestionIndex((prev) => prev + 1);
   };
 
   const handlePreviousQuestion = () => {
-    setCurrentQuestionIndex((prev) => Math.max(0, prev - 1));
+    if (currentQuestionIndex === 0) {
+      setStep("intake");
+      return;
+    }
+    setCurrentQuestionIndex((prev) => prev - 1);
+  };
+
+  const buildReportUrl = (includeEmail = true) => {
+    const v = encodeAnswersToV(answers);
+    const n = encodeURIComponent(lead.name);
+    const e = includeEmail ? encodeURIComponent(lead.email) : "";
+    const i = intakeAnswer ? encodeIntakeAnswer(intakeAnswer) : "";
+    const g = encodeURIComponent(gespreksopenerText);
+    const params = new URLSearchParams({ v, n });
+    if (e) params.set("e", e);
+    if (i) params.set("i", i);
+    if (g) params.set("g", g);
+    return `/rapport?${params.toString()}`;
   };
 
   const handleLeadSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmittingLead(true);
-    const v = encodeAnswersToV(answers);
-    const n = encodeURIComponent(lead.name);
-    const e = encodeURIComponent(lead.email);
-
     setIsSubmittingLead(false);
-    router.push(`/rapport?v=${v}&n=${n}&e=${e}`);
+    router.push(buildReportUrl(true));
   };
 
   const handleSkipLead = () => {
-    const v = encodeAnswersToV(answers);
-    const n = encodeURIComponent(lead.name);
-    router.push(`/rapport?v=${v}&n=${n}&skip=1`);
+    router.push(`${buildReportUrl(false)}&skip=1`);
   };
 
   return (
@@ -97,7 +110,7 @@ export default function Home() {
             </ul>
             <button
               type="button"
-              onClick={() => setStep("questions")}
+              onClick={() => setStep("intake")}
               className="inline-flex min-h-12 items-center justify-center rounded-full px-8 py-3 text-base font-semibold transition focus:outline-none focus-visible:ring-2 hover:bg-[#2D7A3A] hover:text-white"
               style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
             >
@@ -119,6 +132,48 @@ export default function Home() {
                 />
               </div>
             </details>
+          </section>
+        )}
+
+        {step === "intake" && (
+          <section className="space-y-6">
+            <div className="space-y-2">
+              <div className="inline-flex rounded-full px-3 py-1 text-[0.75rem] font-semibold uppercase tracking-widest text-white/70" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+                Intake
+              </div>
+              <p className="text-white text-lg leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+                {intakeQuestion.prompt}
+              </p>
+            </div>
+            <p className="text-white/60 text-sm" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+              Dit bepaalt de lens waarmee de uitkomst gelezen wordt.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => { setIntakeAnswer("ja"); setStep("questions"); }}
+                className="inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-base font-semibold transition hover:bg-[#2D7A3A] hover:text-white"
+                style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
+              >
+                Ja
+              </button>
+              <button
+                type="button"
+                onClick={() => { setIntakeAnswer("nee"); setStep("questions"); }}
+                className="inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-base font-semibold transition hover:bg-[#2D7A3A] hover:text-white"
+                style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
+              >
+                Nee
+              </button>
+              <button
+                type="button"
+                onClick={() => { setIntakeAnswer("deels"); setStep("questions"); }}
+                className="inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-base font-semibold transition hover:bg-[#2D7A3A] hover:text-white"
+                style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
+              >
+                Deels
+              </button>
+            </div>
           </section>
         )}
 
@@ -203,6 +258,25 @@ export default function Home() {
                   </div>
                 </div>
 
+                <div
+                  className="rounded-lg p-4"
+                  style={{
+                    background: "rgba(45, 122, 58, 0.12)",
+                    border: "1px solid rgba(45, 122, 58, 0.35)",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[#C8F5C8]" aria-hidden>💡</span>
+                    <p className="text-[0.75rem] font-semibold uppercase tracking-widest" style={{ color: accent, fontFamily: "var(--font-body), Inter, sans-serif" }}>
+                      Weetje
+                    </p>
+                  </div>
+                  <p className="text-sm text-white/95 leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif", lineHeight: 1.65 }}>
+                    {currentQuestion.weetje}
+                  </p>
+                </div>
+
                 <div className="flex flex-wrap gap-3">
                   <button
                     type="button"
@@ -224,6 +298,48 @@ export default function Home() {
                 </div>
               </motion.div>
             </AnimatePresence>
+          </section>
+        )}
+
+        {step === "gespreksopener" && (
+          <section className="space-y-6">
+            <div className="space-y-2">
+              <div className="inline-flex rounded-full px-3 py-1 text-[0.75rem] font-semibold uppercase tracking-widest text-white/70" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+                Gespreksopener
+              </div>
+              <p className="text-white text-lg leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+                {gespreksopenerQuestion.prompt}
+              </p>
+            </div>
+            <p className="text-white/60 text-sm" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+              Beste openingszin voor de WILD-sessie die op de scan volgt.
+            </p>
+            <textarea
+              value={gespreksopenerText}
+              onChange={(e) => setGespreksopenerText(e.target.value)}
+              placeholder="Typ hier je antwoord of gedachten..."
+              rows={4}
+              className="w-full rounded-lg border border-[#2A2A2A] bg-[#111111] px-4 py-3 text-white placeholder-white/40 outline-none transition focus:border-[#C8F5C8] focus:ring-2 focus:ring-[#C8F5C8]/30 resize-none"
+              style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}
+            />
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => { setCurrentQuestionIndex(questions.length - 1); setStep("questions"); }}
+                className="inline-flex min-h-12 items-center justify-center rounded-full border-2 px-5 py-3 text-sm font-semibold transition hover:bg-[#C8F5C8] hover:text-[#111111]"
+                style={{ background: "transparent", borderColor: accent, color: accent, fontFamily: "var(--font-body), Inter, sans-serif" }}
+              >
+                Vorige
+              </button>
+              <button
+                type="button"
+                onClick={() => setStep("lead")}
+                className="inline-flex min-h-12 items-center justify-center rounded-full px-8 py-3 text-base font-semibold transition hover:bg-[#2D7A3A] hover:text-white"
+                style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
+              >
+                Naar je resultaat
+              </button>
+            </div>
           </section>
         )}
 

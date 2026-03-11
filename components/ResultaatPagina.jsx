@@ -5,7 +5,7 @@ import Logo from "@/components/Logo";
 import emailjs from "@emailjs/browser";
 import { useState, useEffect, useRef } from "react";
 import { bepaalArchetype } from "@/lib/archetypes";
-import { encodeAnswersToV } from "@/lib/report-url";
+import { encodeAnswersToV, encodeIntakeAnswer } from "@/lib/report-url";
 import { kwadrantLabels, rapportCopy, vraagLabels } from "@/lib/copy";
 
 const EMAILJS_SERVICE_ID = (process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "VERVANG_MET_BUREAUTJEAAP_EMAILJS_KEY").trim();
@@ -46,18 +46,18 @@ const kwadrantVraagStart = {
 };
 
 const vraagTitels = [
-  "Experimenteerruimte",
-  "Bereidheid tot verandering",
-  "Psychologische veiligheid rond AI",
-  "Procesduidelijkheid",
-  "Basiskennis & tooling",
-  "Data & informatiehygiene",
-  "Intrinsieke motivatie",
-  "Eigenaarschap & trekkers",
-  "Capaciteit & ruimte",
-  "Strategische visie",
-  "Leiderschap & voorbeeldgedrag",
-  "Ethiek & menselijke regie",
+  "Leren of vinkje?",
+  "Eerlijk durven zijn",
+  "Bedreiging of rugwind?",
+  "Weten waar de winst zit",
+  "Routine of curiositeit?",
+  "Veilig en helder gebruik",
+  "Gefaciliteerd of scharrelend?",
+  "Trekkers op de werkvloer",
+  "De manager als brug of blokkade",
+  "Leiderschap met handen aan de knoppen",
+  "Van directiekamer naar werkvloer",
+  "Kaders als versneller, niet als rem",
 ];
 
 const archetypeTips = {
@@ -402,9 +402,9 @@ function RapportSectie({ kwadrant, data }) {
 }
 
 /**
- * @param {{ scores?: ResultaatScores | null, naam?: string, email?: string, answers?: number[], skipLead?: boolean }} props
+ * @param {{ scores?: ResultaatScores | null, naam?: string, email?: string, answers?: number[], intakeAnswer?: "ja" | "nee" | "deels" | null, gespreksopener?: string, skipLead?: boolean }} props
  */
-export default function ResultaatPagina({ scores = null, naam = "", email = "", answers = [], skipLead = false }) {
+export default function ResultaatPagina({ scores = null, naam = "", email = "", answers = [], intakeAnswer = null, gespreksopener = "", skipLead = false }) {
   const veiligeScores = scores ?? defaultScores;
   const [emailVerzonden, setEmailVerzonden] = useState(false);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
@@ -433,7 +433,16 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
   };
   const rapportLink =
     answers.length === 12
-      ? `https://ai-adoptie-profiel.vercel.app/rapport?v=${encodeAnswersToV(answers)}&n=${encodeURIComponent(naam)}&e=${encodeURIComponent(emailInput)}`
+      ? (() => {
+          const params = new URLSearchParams({
+            v: encodeAnswersToV(answers),
+            n: naam,
+            e: emailInput,
+          });
+          if (intakeAnswer) params.set("i", encodeIntakeAnswer(intakeAnswer));
+          if (gespreksopener) params.set("g", gespreksopener);
+          return `https://ai-adoptie-profiel.vercel.app/rapport?${params.toString()}`;
+        })()
       : "https://ai-adoptie-profiel.vercel.app/";
 
   const dominanteKleur =
@@ -515,6 +524,8 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
         laag2_samenvatting: laag2Samenvatting,
         laag3_samenvatting: laag3Samenvatting,
         kwadrant_rapport_volledig: kwadrantRapportVolledig,
+        intake_answer: intakeAnswer ? `Intake: ${intakeAnswer}` : "",
+        gespreksopener: gespreksopener || "",
       },
       { publicKey: EMAILJS_PUBLIC_KEY },
     );
@@ -559,6 +570,8 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
           signaal_groeikans: signaalGroeikans,
           signaal_opvallend: signaalOpvallend,
           sparring_link: "https://calendly.com/bureautjeaap/wild-scan",
+          intake_answer: intakeAnswer ? `Intake: ${intakeAnswer}` : "",
+          gespreksopener: gespreksopener || "",
         },
         { publicKey: EMAILJS_PUBLIC_KEY },
       );
