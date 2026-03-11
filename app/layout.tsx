@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Positieve Organisatie Scan",
-  description: "Interactieve teamscan met direct inzicht per kwadrant.",
+  title: "AI Adoptie Profiel — De WILD-scan — Bureautje Aap",
+  description: "Hoe klaar is jouw organisatie voor AI? Doe de WILD-scan en ontdek jullie adoptie-profiel.",
 };
 
 export default function RootLayout({

@@ -7,11 +7,11 @@ import { bepaalArchetype } from "@/lib/archetypes";
 import { encodeAnswersToV } from "@/lib/report-url";
 import { kwadrantLabels, rapportCopy, vraagLabels } from "@/lib/copy";
 
-const EMAILJS_SERVICE_ID = (process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "").trim();
-const EMAILJS_USER_TEMPLATE_ID = (process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_USER ?? "").trim();
-const EMAILJS_ADMIN_TEMPLATE_ID = (process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_ADMIN ?? "").trim();
-const EMAILJS_PUBLIC_KEY = (process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "").trim();
-const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? "").trim();
+const EMAILJS_SERVICE_ID = (process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "VERVANG_MET_BUREAUTJEAAP_EMAILJS_KEY").trim();
+const EMAILJS_USER_TEMPLATE_ID = (process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_USER ?? "VERVANG_MET_BUREAUTJEAAP_EMAILJS_KEY").trim();
+const EMAILJS_ADMIN_TEMPLATE_ID = (process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_ADMIN ?? "VERVANG_MET_BUREAUTJEAAP_EMAILJS_KEY").trim();
+const EMAILJS_PUBLIC_KEY = (process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "VERVANG_MET_BUREAUTJEAAP_EMAILJS_KEY").trim();
+const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? "VERVANG_MET_BUREAUTJEAAP_EMAILJS_KEY").trim();
 
 const brand = {
   oranje: "#f79648",
@@ -27,142 +27,74 @@ const brand = {
 };
 
 const kwadrantKleuren = {
-  samenwerking: brand.groen,
-  praktijk: brand.blauw,
-  strategie: brand.donkerrood,
-  missie: brand.oranje,
+  lef: "#E8734A",
+  werkwijze: "#3A7D8C",
+  individu: "#5B8C5A",
+  doel: "#4A5B8C",
 };
 
 const kwadrantLicht = {
-  samenwerking: "#e8f4f0",
-  praktijk: "#e8ecf4",
-  strategie: "#faf0ef",
-  missie: "#fef5ed",
+  lef: "#fdf0eb",
+  werkwijze: "#eaf4f6",
+  individu: "#edf5ed",
+  doel: "#eceff8",
 };
 
 const defaultScores = {
-  samenwerking: { label: kwadrantLabels.samenwerking, score: 0, vragen: [0, 0, 0] },
-  praktijk: { label: kwadrantLabels.praktijk, score: 0, vragen: [0, 0, 0] },
-  strategie: { label: kwadrantLabels.strategie, score: 0, vragen: [0, 0, 0] },
-  missie: { label: kwadrantLabels.missie, score: 0, vragen: [0, 0, 0] },
+  lef: { label: kwadrantLabels.lef, score: 0, vragen: [0, 0, 0] },
+  werkwijze: { label: kwadrantLabels.werkwijze, score: 0, vragen: [0, 0, 0] },
+  individu: { label: kwadrantLabels.individu, score: 0, vragen: [0, 0, 0] },
+  doel: { label: kwadrantLabels.doel, score: 0, vragen: [0, 0, 0] },
 };
 /**
  * @typedef {{
- * samenwerking: { label: string, score: number, vragen: number[] },
- * praktijk: { label: string, score: number, vragen: number[] },
- * strategie: { label: string, score: number, vragen: number[] },
- * missie: { label: string, score: number, vragen: number[] },
+ * lef: { label: string, score: number, vragen: number[] },
+ * werkwijze: { label: string, score: number, vragen: number[] },
+ * individu: { label: string, score: number, vragen: number[] },
+ * doel: { label: string, score: number, vragen: number[] },
  * }} ResultaatScores
  */
 
 const kwadrantVraagStart = {
-  samenwerking: 1,
-  praktijk: 4,
-  strategie: 7,
-  missie: 10,
+  lef: 1,
+  werkwijze: 4,
+  individu: 7,
+  doel: 10,
 };
 
 const vraagTitels = [
-  "Kwetsbaarheid",
-  "Collectieve draagkracht",
-  "Energie & plezier",
-  "Spelregels & insluiting",
-  "Vergaderdynamiek",
-  "Ruimte vs. controle",
-  "Heldere kaders",
-  "Duidelijke rolverdeling",
-  "Gezamenlijk eigenaarschap",
-  "Hoger doel",
-  "Sterke kanten benutten",
-  "Blik naar buiten",
+  "Experimenteerruimte",
+  "Bereidheid tot verandering",
+  "Psychologische veiligheid rond AI",
+  "Procesduidelijkheid",
+  "Basiskennis & tooling",
+  "Data & informatiehygiene",
+  "Intrinsieke motivatie",
+  "Eigenaarschap & trekkers",
+  "Capaciteit & ruimte",
+  "Strategische visie",
+  "Leiderschap & voorbeeldgedrag",
+  "Ethiek & menselijke regie",
 ];
 
 const archetypeTips = {
-  positieve_organisatie: {
-    titel: "ReVlectie",
-    tip: "Vraag jezelf elke vrijdag af: Wat gaf me deze week Vreugde, Verbinding en Vooruitgang?",
-    bron: "(p.7, actie 4)",
-  },
-  presterende_eilanden: {
-    titel: "Erken moeite",
-    tip: "Waardeer de intentie en inspanningen van je medewerker expliciet.",
-    bron: "(p.10, actie 3)",
-  },
-  inspirerende_chaos: {
-    titel: "Schaalvragen eigenaarschap",
-    tip: "Stel schaalvragen. Vraag bijvoorbeeld: op een schaal van 1-10, hoe zeker ben je?",
-    bron: "(p.12)",
-  },
-  warme_stagnatie: {
-    titel: "Begin met betekenis",
-    tip: "Begin met betekenis in plaats van taken: waarom is dit project belangrijk, en voor wie?",
-    bron: "(p.16)",
-  },
-  efficiente_machine: {
-    titel: "Gouden moment",
-    tip: "Vraag teamleden naar een moment waarop ze echt trots waren of geraakt werden, als ingang naar zingeving.",
-    bron: "(p.16)",
-  },
-  gezellige_bubbel: {
-    titel: "Waardenwandeling",
-    tip: "Waar werd je enthousiast van de afgelopen tijd en wat is er nodig om dat te verdubbelen?",
-    bron: "(p.16)",
-  },
-  gedreven_cowboys: {
-    titel: "Jaardoel",
-    tip: "Voeg aan het gesprek over jaardoelen de vraag toe: wat wil je dit jaar bijdragen waar je over 5 jaar nog met voldoening op terugkijkt?",
-    bron: "(p.16)",
-  },
-  bevlogen_gemeenschap: {
-    titel: "Schaalvragen + open vragen",
-    tip: "Stel open vragen, zoals: wat zie jij als de volgende stap?",
-    bron: "(p.12)",
-  },
-  resultatenboer: {
-    titel: "Vier succes, hoe klein ook",
-    tip: "Vier ook de andere successen, zoals de inspanningen en de samenwerking.",
-    bron: "(p.11, actie 4)",
-  },
-  professionele_eenzame: {
-    titel: "Collegiale coaching",
-    tip: "Introduceer collegiale coaching waarbij teamleden leren waarderende vragen te stellen.",
-    bron: "(p.12)",
-  },
-  loyale_uitvoerder: {
-    titel: "Intentie",
-    tip: "Begin je dag met een intentie: hoe wil je vandaag zijn in je team, in plaats van wat je gaat doen?",
-    bron: "(p.7, actie 1)",
-  },
-  taaie_kern: {
-    titel: "Positieve uitzondering",
-    tip: "Ga in je team geregeld op zoek naar een positieve uitzondering. Ontdek wat er in deze uitzondering verborgen ligt waar het team meer van wil in de toekomst.",
-    bron: "(p.14, actie 2)",
-  },
-  holle_structuur: {
-    titel: "Check-in + Eigen houding",
-    tip: "Wees in je team open over wat je intentie was, wat er anders is gegaan en wat je ervan hebt geleerd zonder jezelf te veroordelen.",
-    bron: "(p.11, actie 5)",
-  },
-  ongedeelde_visie: {
-    titel: "Collegiale coaching + open vragen",
-    tip: "Introduceer collegiale coaching en begeleid de volgende stap door te vragen: Wat zie jij als de volgende stap?",
-    bron: "(p.12)",
-  },
-  bevlogen_pionier: {
-    titel: "Turbo brainstorm",
-    tip: "Heb je een probleem te pakken? Stop met analyseren en ga creeren. Zet een stopwatch op 5 minuten.",
-    bron: "(p.14, actie 3)",
-  },
-  uitgeblust: {
-    titel: "Maak ruimte bij stress",
-    tip: "Creëer een gezamenlijke pauze om te herstellen van stress met ademhalingsoefeningen of een buitenwandeling.",
-    bron: "(p.14, actie 4)",
-  },
-  solide_middenveld: {
-    titel: "Energiebarometer",
-    tip: "Laat je medewerkers aangeven hoe ze in hun energie zitten.",
-    bron: "(p.14, actie 1)",
-  },
+  ai_native: { titel: "Schaal met kaders", tip: "Kies 1-2 bewezen AI-routines en maak ze organisatiebreed standaard met duidelijke kwaliteitseisen.", bron: "WILD-actie 1" },
+  strategische_koploper: { titel: "Maak leren zichtbaar", tip: "Plan vaste demo-momenten waarin teams ook AI-mislukkingen delen als leermoment.", bron: "WILD-actie 2" },
+  vliegende_start: { titel: "Borg je aanpak", tip: "Leg succesvolle experimenten meteen vast in werkafspraken zodat kennis niet bij personen blijft hangen.", bron: "WILD-actie 3" },
+  afwachtende_massa: { titel: "Activeer eigenaarschap", tip: "Wijs per team een AI-trekker aan met mandaat, tijd en een heldere opdracht.", bron: "WILD-actie 4" },
+  koplopers_zonder_kompas: { titel: "Scherp je koers", tip: "Vertaal de AI-visie naar 3 concrete organisatiedoelen en stop initiatieven die daar niet aan bijdragen.", bron: "WILD-actie 5" },
+  ai_oase: { titel: "Van prettig naar productief", tip: "Kies een gezamenlijk AI-doel voor de komende 30 dagen en monitor wekelijks de voortgang.", bron: "WILD-actie 6" },
+  bevlogen_hobbyist: { titel: "Van hobby naar routine", tip: "Maak een eenvoudige playbook met top-5 prompts, tools en afspraken voor dagelijks gebruik.", bron: "WILD-actie 7" },
+  veilige_verkenner: { titel: "Van verkennen naar doen", tip: "Reserveer structureel tijd in de week voor AI-implementatie, niet alleen voor oriëntatie.", bron: "WILD-actie 8" },
+  gereedschapskist: { titel: "Werk aan cultuur", tip: "Introduceer een maandelijkse AI-check-in: wat werkte, wat niet, en wat leren we als team?", bron: "WILD-actie 9" },
+  we_zien_een_kans: { titel: "Maak het concreet", tip: "Kies één proces met hoge impact en ontwerp daar een eerste AI-workflow met duidelijke eigenaar.", bron: "WILD-actie 10" },
+  plan_in_de_la: { titel: "Breng plan tot leven", tip: "Converteer je AI-plan naar 3 concrete sprintacties met deadline, eigenaar en meetpunt.", bron: "WILD-actie 11" },
+  de_zin_is_er: { titel: "Geef richting", tip: "Koppel teamenergie aan een heldere AI-prioriteit en bewaak elke week wat wel en niet start.", bron: "WILD-actie 12" },
+  slapende_reus: { titel: "Wek het momentum", tip: "Maak succes zichtbaar met een kort intern showcase-moment rond één werkend AI-resultaat.", bron: "WILD-actie 13" },
+  eenzame_strateeg: { titel: "Verdeel leiderschap", tip: "Bouw een AI-kernteam met vertegenwoordigers uit meerdere teams in plaats van één kartrekker.", bron: "WILD-actie 14" },
+  papieren_visie: { titel: "Van visie naar gedrag", tip: "Vraag leiders wekelijks één concreet voorbeeld te delen van hun eigen AI-gebruik.", bron: "WILD-actie 15" },
+  digitale_woestijn: { titel: "Begin klein", tip: "Start met één laagdrempelige use case die binnen twee weken zichtbaar waarde oplevert.", bron: "WILD-actie 16" },
+  zoekende_organisatie: { titel: "Kies focus", tip: "Bepaal welk WILD-domein nu het meest remt en zet daar 30 dagen lang gericht op in.", bron: "WILD-actie 17" },
 };
 
 function gemiddelde(scores) {
@@ -191,88 +123,88 @@ function scoreLabel(score) {
 }
 
 const tips = {
-  samenwerking: {
-    kort: "Jullie verbinding is jullie kracht - voed die bewust.",
-    lang: "Teams die hoog scoren op samenwerking hebben een stevige basis van vertrouwen. De volgende stap is om die verbinding te verdiepen: maak ruimte voor echte gesprekken naast de taakgerichte overleggen.",
-    actie: "Plan volgende week een 15-minuten check-in zonder agenda - alleen de vraag: 'Hoe zit jij erin?'",
+  lef: {
+    kort: "Lef en leerveiligheid versnellen AI-adoptie.",
+    lang: "Teams die hoog scoren op Lef & Cultuur durven te experimenteren en delen openlijk wat niet werkt. Dat versnelt leren en verlaagt weerstand.",
+    actie: "Plan elke week een kort AI-leermoment: wat werkte, wat niet, wat doen we anders?",
   },
-  praktijk: {
-    kort: "Heldere spelregels zijn de smeerolie van een vlot draaiend team.",
-    lang: "Bij teams die op Praktijk groeikansen hebben, zien we vaak dat ongeschreven regels veel energie kosten. De winst zit niet in meer procedures, maar in het expliciet maken van wat iedereen al aanvoelt.",
-    actie: "Vraag je team: 'Welke drie dingen zou je een nieuwe collega op dag een willen vertellen?'",
+  werkwijze: {
+    kort: "AI wordt pas schaalbaar met heldere processen en informatie.",
+    lang: "Bij lagere scores op Werkwijze & Proces zien we vaak veel losse pogingen, maar weinig herhaalbaarheid. Procesduidelijkheid en datahygiene maken het verschil.",
+    actie: "Kies één kernproces en beschrijf expliciet waar AI wel en niet in zit.",
   },
-  strategie: {
-    kort: "Floreren vraagt om een stevige basis: heldere doelen, duidelijke rollen.",
-    lang: "Teams die lager scoren op Koers & Resultaat hebben vaak niet te weinig ambitie, maar te weinig helderheid. Wie is waarvoor verantwoordelijk? Waaraan meten we succes?",
-    actie: "Maak samen een 'wie doet wat'-overzicht voor de komende maand.",
+  individu: {
+    kort: "Eigenaarschap maakt AI van idee naar gedrag.",
+    lang: "Hoge scores op Individu & Eigenaarschap betekenen dat mensen zelf initiatief nemen en anderen meenemen. Zonder trekkers blijft adoptie vaak abstract.",
+    actie: "Wijs per team een AI-trekker aan met tijd, mandaat en heldere doelen.",
   },
-  missie: {
-    kort: "Jullie zingeving is een motor - gebruik hem bewust.",
-    lang: "Teams met een hoge Missie-score weten waarom ze doen wat ze doen. Houd dit levend door regelmatig te vieren wat jullie al bereikt hebben.",
-    actie: "Start je volgende teamoverleg met: 'Waar zijn we afgelopen week trots op?'",
+  doel: {
+    kort: "AI-impact groeit als koers, leiderschap en regie samenkomen.",
+    lang: "Teams met sterke scores op Doel & Strategie koppelen AI aan organisatiedoelen en houden menselijke regie expliciet vast.",
+    actie: "Formuleer drie AI-principes voor verantwoord gebruik en bespreek ze maandelijks.",
   },
 };
 
 const watSpeeltPerVraag = {
   1: {
-    laag: "Kwetsbaarheid is hier nog een uitdaging, maar tegelijk een kansrijk startpunt voor groei en meer psychologische veiligheid.",
-    midden: "Kwetsbaarheid lijkt hier een belangrijk ankerpunt: fouten en twijfels worden steeds vaker bespreekbaar.",
-    hoog: "Kwetsbaarheid is hier jullie sterkste punt: fouten mogen besproken worden en dat versterkt veiligheid en lerend vermogen.",
+    laag: "Experimenteerruimte is nog beperkt, maar juist dat maakt dit een kansrijk startpunt voor AI-adoptie.",
+    midden: "Experimenteerruimte is aanwezig: AI wordt al geprobeerd, maar nog niet overal gedeeld.",
+    hoog: "Experimenteerruimte is jullie sterkste punt: AI-leren door proberen zit duidelijk in de cultuur.",
   },
   2: {
-    laag: "Collectieve draagkracht is nu nog kwetsbaar, maar juist daarom een kansrijk thema om als team samen op te bouwen.",
-    midden: "Collectieve draagkracht is hier een zichtbaar sterk punt: in drukke periodes lukt het vaker om elkaar op te vangen.",
-    hoog: "Collectieve draagkracht is hier jullie sterkste punt: bij drukte vangen jullie elkaar op en dragen jullie de last samen.",
+    laag: "Bereidheid tot verandering vraagt aandacht, maar met kleine successen kan dit snel kantelen.",
+    midden: "Bereidheid tot verandering is redelijk: het team beweegt mee, maar nog niet iedereen even snel.",
+    hoog: "Bereidheid tot verandering is een duidelijk sterk punt: nieuwe AI-tools worden actief omarmd.",
   },
   3: {
-    laag: "Energie en plezier vragen aandacht, maar zijn kansrijk om bewust ruimte te geven in jullie teamritme.",
-    midden: "Energie en plezier zijn hier een sterk punt: er ontstaat regelmatig ontspanning en verbinding.",
-    hoog: "Energie en plezier zijn hier jullie sterkste punt: de positieve teamdynamiek vormt een stevige buffer tegen stress.",
+    laag: "Psychologische veiligheid rond AI is nog fragiel, maar biedt een directe groeikans.",
+    midden: "Psychologische veiligheid rond AI groeit: twijfel en vragen krijgen steeds vaker ruimte.",
+    hoog: "Psychologische veiligheid rond AI is jullie sterkste punt: mensen durven open te leren.",
   },
   4: {
-    laag: "Spelregels en insluiting zijn nog een uitdaging, maar vormen een kansrijk startpunt voor meer duidelijkheid en veiligheid.",
-    midden: "Spelregels en insluiting zijn hier een sterk punt: de basis is herkenbaar en helpt nieuwe mensen mee te doen.",
-    hoog: "Spelregels en insluiting zijn hier jullie sterkste punt: de basis is helder en nieuwkomers stappen soepel in.",
+    laag: "Procesduidelijkheid is nog een uitdaging, maar dit is een kansrijk fundament voor AI.",
+    midden: "Procesduidelijkheid is redelijk: er is basisstructuur, maar nog niet overal consistent.",
+    hoog: "Procesduidelijkheid is jullie sterkste punt: jullie processen zijn klaar om AI op te schalen.",
   },
   5: {
-    laag: "Vergaderdynamiek is nog een uitdaging, maar kansrijk om met kleine interventies meer stemmen aan tafel te krijgen.",
-    midden: "Vergaderdynamiek is hier een sterk punt: verschillende teamleden krijgen merkbaar ruimte om bij te dragen.",
-    hoog: "Vergaderdynamiek is hier jullie sterkste punt: overleggen zijn inclusief en benutten de aanwezige denkkracht optimaal.",
+    laag: "Basiskennis en tooling zijn nog beperkt, maar met gerichte training snel te versterken.",
+    midden: "Basiskennis en tooling zijn aanwezig: AI-gebruik gebeurt al, nog niet structureel.",
+    hoog: "Basiskennis en tooling zijn jullie sterkste punt: AI-gebruik is zichtbaar ingebed in de praktijk.",
   },
   6: {
-    laag: "Ruimte en vertrouwen zijn nog een uitdaging, maar kansrijk om stap voor stap meer autonomie te versterken.",
-    midden: "Ruimte en vertrouwen zijn hier een sterk punt: er ontstaat vaker sturing op resultaat in plaats van controle op detail.",
-    hoog: "Ruimte en vertrouwen zijn hier jullie sterkste punt: jullie sturen op resultaat en dat vergroot autonomie en werkplezier.",
+    laag: "Data- en informatiehygiene is nog een knelpunt, maar een cruciale kans om AI bruikbaar te maken.",
+    midden: "Data- en informatiehygiene is redelijk op orde, met nog enkele gaten in kwaliteit en toegankelijkheid.",
+    hoog: "Data- en informatiehygiene is jullie sterkste punt: de informatiebasis ondersteunt slimme AI-toepassing.",
   },
   7: {
-    laag: "Kaders en doelen zijn nu nog een uitdaging, maar een kansrijk thema om mee te starten voor meer focus.",
-    midden: "Kaders en doelen zijn hier jullie sterkste punt: de richting is voldoende duidelijk om gericht stappen te zetten.",
-    hoog: "Kaders en doelen zijn glashelder, dat geeft een prachtige basis om als team doelgericht te versnellen.",
+    laag: "Intrinsieke motivatie voor AI is nog laag, maar met concrete successen kan dit snel groeien.",
+    midden: "Intrinsieke motivatie is aanwezig: een deel van het team pakt AI al vanuit eigen initiatief op.",
+    hoog: "Intrinsieke motivatie is jullie sterkste punt: mensen verkennen AI proactief en met eigenaarschap.",
   },
   8: {
-    laag: "Rolverdeling is nu nog een uitdaging, maar een kansrijk startpunt om meer rust en voorspelbaarheid te brengen.",
-    midden: "Rolverdeling is hier jullie sterkste punt: verantwoordelijkheden zijn duidelijk genoeg om goed samen te werken.",
-    hoog: "Rolverdeling is hier glashelder: iedereen weet precies wie wat oppakt en dat voorkomt ruis en dubbel werk.",
+    laag: "Eigenaarschap en trekkers ontbreken nog, maar dit is een directe hefboom voor versnelling.",
+    midden: "Eigenaarschap en trekkers zijn zichtbaar, maar nog afhankelijk van enkele personen.",
+    hoog: "Eigenaarschap en trekkers zijn jullie sterkste punt: AI-initiatief is breed en zelforganiserend.",
   },
   9: {
-    laag: "Eigenaarschap op resultaat is nog een uitdaging, maar kansrijk om stap voor stap breder in het team te verankeren.",
-    midden: "Eigenaarschap op resultaat is hier een sterk punt: verantwoordelijkheid wordt al door meerdere mensen gedragen.",
-    hoog: "Eigenaarschap op resultaat is hier jullie sterkste punt: het team draait zelfstandig door en pakt breed verantwoordelijkheid.",
+    laag: "Capaciteit en ruimte zijn nog beperkt, maar met bewuste tijdsblokken ontstaat snel beweging.",
+    midden: "Capaciteit en ruimte zijn aanwezig, alleen nog niet structureel genoeg geborgd.",
+    hoog: "Capaciteit en ruimte zijn jullie sterkste punt: AI-ontwikkeling heeft een vaste plek in het werkritme.",
   },
   10: {
-    laag: "Betekenis en hoger doel zijn nog een uitdaging, maar juist kansrijk om nieuwe energie in het dagelijkse werk te brengen.",
-    midden: "Hoger doel is hier een sterk punt: het team voelt in toenemende mate de link tussen taken en betekenis.",
-    hoog: "Hoger doel is hier jullie sterkste punt: het werk voelt betekenisvol en duidelijk verbonden aan de grotere missie.",
+    laag: "Strategische visie op AI is nog vaag, maar dit is een kansrijk startpunt voor focus.",
+    midden: "Strategische visie op AI is in ontwikkeling: richting is aanwezig, nog niet overal gedeeld.",
+    hoog: "Strategische visie op AI is jullie sterkste punt: koers en organisatiedoelen zijn duidelijk verbonden.",
   },
   11: {
-    laag: "Werken vanuit sterke kanten is nog een uitdaging, maar een kansrijk vertrekpunt om meer energie los te maken.",
-    midden: "Sterke kanten benutten is hier een sterk punt: er is al ruimte om kwaliteiten passend in te zetten.",
-    hoog: "Sterke kanten benutten is hier jullie sterkste punt: teamleden werken zichtbaar vanuit hun eigen kracht.",
+    laag: "Leiderschap en voorbeeldgedrag rond AI zijn nog beperkt, maar hebben veel hefboomwerking.",
+    midden: "Leiderschap en voorbeeldgedrag zijn zichtbaar, nog niet overal consistent.",
+    hoog: "Leiderschap en voorbeeldgedrag zijn jullie sterkste punt: het management zet de toon in AI-gebruik.",
   },
   12: {
-    laag: "Blik naar buiten is nog een uitdaging, maar een kansrijk thema om wendbaarheid en toekomstgerichtheid te versterken.",
-    midden: "Blik naar buiten is hier een sterk punt: er is al regelmatig aandacht voor de omgeving en wat die vraagt.",
-    hoog: "Blik naar buiten is hier jullie sterkste punt: jullie reflecteren actief op de omgeving en blijven daardoor wendbaar.",
+    laag: "Ethiek en menselijke regie zijn nog onduidelijk, maar essentieel om AI verantwoord te schalen.",
+    midden: "Ethiek en menselijke regie zijn in opbouw: er zijn afspraken, nog niet overal bekend.",
+    hoog: "Ethiek en menselijke regie zijn jullie sterkste punt: verantwoord AI-gebruik is bewust georganiseerd.",
   },
 };
 
@@ -297,7 +229,7 @@ function watSpeeltHierVoorKwadrant(kwadrant, vragen, kwadrantScore) {
   return contextZin(varianten, hoogsteScore ?? kwadrantScore);
 }
 
-function QuinnWiel({ scores, size = 280, animated = true }) {
+function WILDWiel({ scores, size = 280, animated = true }) {
   const [progress, setProgress] = useState(animated ? 0 : 1);
   useEffect(() => {
     if (!animated) return;
@@ -319,10 +251,10 @@ function QuinnWiel({ scores, size = 280, animated = true }) {
   const gridRadii = [0.25, 0.5, 0.75, 1];
 
   const kwadranten = [
-    { key: "missie", label: "Missie &\nZingeving", angle: -45 },
-    { key: "strategie", label: "Strategie &\nBasis", angle: 45 },
-    { key: "praktijk", label: "Praktijk", angle: 135 },
-    { key: "samenwerking", label: "Samen-\nwerking", angle: -135 },
+    { key: "doel", label: "Doel &\nStrategie", angle: -45 },
+    { key: "individu", label: "Individu &\nEigenaarschap", angle: 45 },
+    { key: "werkwijze", label: "Werkwijze &\nProces", angle: 135 },
+    { key: "lef", label: "Lef &\nCultuur", angle: -135 },
   ];
 
   function polarToXY(angle, r) {
@@ -423,7 +355,7 @@ function RapportSectie({ kwadrant, data }) {
     <div className="mb-8 rounded-2xl overflow-hidden shadow-sm border border-gray-100">
       <div className="flex items-center justify-between px-6 py-4" style={{ background: kleur }}>
         <div>
-          <div className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1">Wiel van Quinn</div>
+          <div className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1">WILD-model</div>
           <div className="text-white font-bold text-lg leading-tight" style={{ fontFamily: "'Alegreya Sans', Georgia, serif" }}>
             {data.label}
           </div>
@@ -496,10 +428,10 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
   const gem = gemiddelde(veiligeScores);
   const gemSl = scoreLabel(gem);
   const archetypeResultaat = bepaalArchetype({
-    samenwerking: veiligeScores.samenwerking.score,
-    praktijk: veiligeScores.praktijk.score,
-    strategie: veiligeScores.strategie.score,
-    missie: veiligeScores.missie.score,
+    lef: veiligeScores.lef.score,
+    werkwijze: veiligeScores.werkwijze.score,
+    individu: veiligeScores.individu.score,
+    doel: veiligeScores.doel.score,
   }, answers);
   const { beste, runner1, runner2, zekerheid } = archetypeResultaat;
   const archetypeTop3 = [beste, runner1, runner2];
@@ -510,18 +442,18 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
   };
   const rapportLink =
     answers.length === 12
-      ? `https://positive-organisatie-scan.vercel.app/rapport?v=${encodeAnswersToV(answers)}&n=${encodeURIComponent(naam)}&e=${encodeURIComponent(emailInput)}`
-      : "https://positive-organisatie-scan.vercel.app/";
+      ? `https://ai-adoptie-profiel.vercel.app/rapport?v=${encodeAnswersToV(answers)}&n=${encodeURIComponent(naam)}&e=${encodeURIComponent(emailInput)}`
+      : "https://ai-adoptie-profiel.vercel.app/";
 
   const dominanteKleur =
     beste.dominantKwadrant === "s"
-      ? "#006d82"
+      ? "#E8734A"
       : beste.dominantKwadrant === "p"
-        ? "#314a7b"
+        ? "#3A7D8C"
         : beste.dominantKwadrant === "st"
-          ? "#c86059"
+          ? "#5B8C5A"
           : beste.dominantKwadrant === "m"
-            ? "#f79648"
+            ? "#4A5B8C"
             : "#8cb4ac";
   const zekerheidTekst =
     zekerheid > 70
@@ -538,10 +470,10 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
   const antwoordenSamenvatting = answers.length
     ? answers.map((score, index) => `${vraagLabels[`V${index + 1}`] ?? vraagTitels[index] ?? "Vraag"}: ${score}`).join("\n")
     : [
-        ...veiligeScores.samenwerking.vragen.map((v, i) => `${vraagLabels[`V${i + 1}`]}: ${v}`),
-        ...veiligeScores.praktijk.vragen.map((v, i) => `${vraagLabels[`V${i + 4}`]}: ${v}`),
-        ...veiligeScores.strategie.vragen.map((v, i) => `${vraagLabels[`V${i + 7}`]}: ${v}`),
-        ...veiligeScores.missie.vragen.map((v, i) => `${vraagLabels[`V${i + 10}`]}: ${v}`),
+        ...veiligeScores.lef.vragen.map((v, i) => `${vraagLabels[`V${i + 1}`]}: ${v}`),
+        ...veiligeScores.werkwijze.vragen.map((v, i) => `${vraagLabels[`V${i + 4}`]}: ${v}`),
+        ...veiligeScores.individu.vragen.map((v, i) => `${vraagLabels[`V${i + 7}`]}: ${v}`),
+        ...veiligeScores.doel.vragen.map((v, i) => `${vraagLabels[`V${i + 10}`]}: ${v}`),
       ].join("\n");
 
   const rapportVolgorde = Object.keys(veiligeScores).sort((a, b) => veiligeScores[a].score - veiligeScores[b].score);
@@ -556,10 +488,10 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
     .join("\n\n");
 
   const quadrantSummary = [
-    `${veiligeScores.samenwerking.label}: ${veiligeScores.samenwerking.score.toFixed(1)}`,
-    `${veiligeScores.praktijk.label}: ${veiligeScores.praktijk.score.toFixed(1)}`,
-    `${veiligeScores.strategie.label}: ${veiligeScores.strategie.score.toFixed(1)}`,
-    `${veiligeScores.missie.label}: ${veiligeScores.missie.score.toFixed(1)}`,
+    `${veiligeScores.lef.label}: ${veiligeScores.lef.score.toFixed(1)}`,
+    `${veiligeScores.werkwijze.label}: ${veiligeScores.werkwijze.score.toFixed(1)}`,
+    `${veiligeScores.individu.label}: ${veiligeScores.individu.score.toFixed(1)}`,
+    `${veiligeScores.doel.label}: ${veiligeScores.doel.score.toFixed(1)}`,
   ].join("\n");
 
   const signaalKracht = `${veiligeScores[sterk[0]].label}: ${tips[sterk[0]].kort}`;
@@ -635,7 +567,7 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
           signaal_kracht: signaalKracht,
           signaal_groeikans: signaalGroeikans,
           signaal_opvallend: signaalOpvallend,
-          sparring_link: "mailto:team@uiterwaarden.com?subject=Scan-reflectie%20aanvragen&body=Hoi%2C%20ik%20wil%20graag%20een%20sparring%20sessie%20inplannen%20naar%20aanleiding%20van%20mijn%20Positieve%20Organisatie%20Scan.",
+          sparring_link: "https://calendly.com/bureautjeaap/wild-scan",
         },
         { publicKey: EMAILJS_PUBLIC_KEY },
       );
@@ -666,9 +598,9 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="Uiterwaarden" width={120} height={40} className="object-contain" />
+            <Image src="/logo.png" alt="Bureautje Aap" width={120} height={40} className="object-contain" />
           </div>
-          <div className="text-xs text-gray-400">Positieve Organisatie Scan</div>
+          <div className="text-xs text-gray-400">AI Adoptie Profiel — de WILD-scan</div>
         </div>
       </header>
 
@@ -676,12 +608,12 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
         <div className="mb-8">
           <div className="text-center mb-6">
             <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: brand.groen }}>
-              Jouw resultaat
+              AI Adoptie Profiel
             </div>
             <h1 className="text-3xl font-black text-gray-800 leading-tight mb-2" style={{ fontFamily: "'Alegreya Sans', Georgia, serif" }}>
               {naam ? `Goed gedaan, ${naam}` : "Jouw team in beeld"}
             </h1>
-            <p className="text-gray-500 text-sm">Momentopname van de afgelopen week · {new Date().toLocaleDateString("nl-NL", { day: "numeric", month: "long" })}</p>
+            <p className="text-gray-500 text-sm">Momentopname met de WILD-scan · {new Date().toLocaleDateString("nl-NL", { day: "numeric", month: "long" })}</p>
           </div>
 
           <div className="rounded-3xl p-6 mb-5" style={{ background: dominanteKleur }}>
@@ -753,7 +685,7 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
 
           <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 mb-5">
             <div className="flex flex-col items-center">
-              <QuinnWiel scores={veiligeScores} size={280} animated />
+              <WILDWiel scores={veiligeScores} size={280} animated />
               <div className="mt-4 text-center">
                 <div className="text-5xl font-black" style={{ color: gemSl.color, fontFamily: "'Alegreya Sans', Georgia, serif" }}>
                   {gem.toFixed(1)}
@@ -761,7 +693,7 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
                 <div className="text-sm font-semibold mt-1" style={{ color: gemSl.color }}>
                   {gemSl.label}
                 </div>
-                <div className="text-gray-400 text-xs mt-1">gemiddelde over alle kwadranten</div>
+                <div className="text-gray-400 text-xs mt-1">gemiddelde over alle WILD-domeinen</div>
               </div>
             </div>
           </div>
@@ -849,9 +781,9 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
           </div>
 
           <div className="rounded-2xl p-6 mb-6" style={{ border: "2px solid #f79648", background: "rgba(247, 150, 72, 0.06)" }}>
-            <p className="text-xs font-semibold uppercase tracking-widest text-orange-600 mb-2">Sparring</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-orange-600 mb-2">AI-gesprek</p>
             <h3 className="font-black text-gray-800 text-xl mb-2" style={{ fontFamily: "'Alegreya Sans', Georgia, serif" }}>
-              Sparren over jullie uitslag?
+              AI-gesprek over jullie uitslag?
             </h3>
             <p className="text-sm text-gray-700 leading-relaxed">
               {rapportCopy.sparringBody}
@@ -862,14 +794,14 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
                 e.preventDefault();
                 if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
                   window.Calendly.initPopupWidget({
-                    url: "https://calendly.com/bureauopdrift/positieve-organisatie-scan?hide_gdpr_banner=1",
+                    url: "https://calendly.com/bureautjeaap/wild-scan",
                   });
                 }
               }}
               className="inline-block mt-4 px-4 py-2 rounded-xl text-sm font-bold text-white hover:opacity-90 transition-opacity"
               style={{ background: "#f79648" }}
             >
-              Plan een moment →
+              Plan een WILD-sessie
             </a>
           </div>
 
@@ -878,7 +810,7 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
               <h3 className="font-semibold text-gray-700 text-sm mb-1" style={{ fontFamily: "'Alegreya Sans', Georgia, serif" }}>Ontvang dit rapport in je mailbox</h3>
               <p className="text-gray-600 text-xs mb-3 leading-relaxed">We sturen je resultaten direct naar je inbox.</p>
               {emailVerzonden ? (
-                <div className="rounded-xl p-4 text-center" style={{ background: kwadrantLicht.samenwerking }}>
+                <div className="rounded-xl p-4 text-center" style={{ background: kwadrantLicht.lef }}>
                   <div className="text-2xl mb-1">✓</div>
                   <p className="font-bold text-sm" style={{ color: brand.groen }}>
                     Rapport onderweg naar {emailInput}

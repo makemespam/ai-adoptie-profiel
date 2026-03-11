@@ -69,22 +69,22 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 text-slate-900">
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Image src="/logo.png" alt="Uiterwaarden" width={120} height={40} className="object-contain" />
-          <div className="text-xs text-gray-400">Positieve Organisatie Scan</div>
+          <Image src="/logo.png" alt="Bureautje Aap" width={120} height={40} className="object-contain" />
+          <div className="text-xs text-gray-400">AI Adoptie Profiel — de WILD-scan</div>
         </div>
       </header>
       <main className="mx-auto w-full max-w-2xl rounded-3xl border border-gray-100 bg-white p-5 shadow-sm mt-6 mb-8 sm:p-8">
         {step === "welcome" && (
           <section className="space-y-6">
             <div className="inline-flex rounded-full px-3 py-1 text-sm font-medium" style={{ background: "#e8f4f0", color: brand.groen }}>
-              Positieve Organisatie Scan
+              AI Adoptie Profiel
             </div>
             <h1 className="text-3xl font-bold leading-tight text-slate-900 sm:text-4xl" style={{ fontFamily: "'Alegreya Sans', Georgia, serif" }}>
-              In 5 minuten inzicht in waar jullie team floreert
+              In 5 minuten inzicht in jullie AI-gereedheid
             </h1>
             <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
-              Deze scan is een korte, positieve momentopname van de afgelopen week. Er zijn geen goede
-              of foute antwoorden: je ontdekt waar energie zit en waar groeikansen liggen.
+              Deze WILD-scan is een korte momentopname van de afgelopen periode. Er zijn geen goede of
+              foute antwoorden: je ontdekt waar jullie AI-adoptie al sterk is en waar groeikansen liggen.
             </p>
             <ul className="space-y-2 rounded-2xl bg-slate-100 p-4 text-sm text-slate-700">
               <li>12 vragen verdeeld over 4 kwadranten</li>
@@ -108,7 +108,7 @@ export default function Home() {
                 <p className="text-sm leading-relaxed text-slate-600">{uitlegCopy.toelichting}</p>
                 <Image
                   src={uitlegCopy.graphicPad}
-                  alt="Competing Values Framework van Robert Quinn"
+                  alt="Visual van het WILD-model"
                   width={1200}
                   height={700}
                   className="h-auto w-full rounded-lg object-contain"
@@ -209,7 +209,7 @@ export default function Home() {
           <section className="space-y-6">
             <h2 className="text-2xl font-semibold text-slate-900" style={{ fontFamily: "'Alegreya Sans', Georgia, serif" }}>Ontvang je resultaten en uitgebreide rapport</h2>
             <p className="text-slate-600">
-              Vul je naam en e-mailadres in. Dan kun je direct door naar je scanresultaat en is de
+              Vul je naam en e-mailadres in. Dan kun je direct door naar je WILD-resultaat en is de
               e-mailafhandeling voorbereid voor verzending.
             </p>
 

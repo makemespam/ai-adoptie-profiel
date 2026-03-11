@@ -1,6 +1,6 @@
-# Positieve Organisatie Scan
+# AI Adoptie Profiel
 
-Interactieve webapp voor de Positieve Organisatie Scan (12 vragen, 4 kwadranten), gebouwd met Next.js App Router en klaar voor embed in een iframe op een WordPress/Divi-site.
+Interactieve webapp voor het AI Adoptie Profiel — de WILD-scan (12 vragen, 4 domeinen), gebouwd met Next.js App Router.
 
 ## Stack
 

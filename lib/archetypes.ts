@@ -1,12 +1,12 @@
 // lib/archetypes.ts
-// Positieve Organisatie Scan — Uiterwaarden
-// Archetype classificatie op basis van het Wiel van Quinn
+// AI Adoptie Profiel — Bureautje Aap
+// Archetype classificatie op basis van het WILD-model
 
 export type Scores = {
-  samenwerking: number;
-  praktijk: number;
-  strategie: number;
-  missie: number;
+  lef: number;
+  werkwijze: number;
+  individu: number;
+  doel: number;
 };
 
 export type Archetype = {
@@ -22,254 +22,241 @@ export type Archetype = {
 };
 
 export const archetypen: Archetype[] = [
-
-  // ─── ALLE VIER HOOG ────────────────────────────────────────────────────────
   {
-    id: "positieve_organisatie",
-    naam: "De Positieve Organisatie",
-    tagline: "Jullie floreren op alle vlakken — dat is zeldzamer dan het lijkt.",
+    id: "ai_native",
+    naam: "De AI-Native Organisatie",
+    tagline: "AI is hier geen project, maar een vanzelfsprekend onderdeel van het werk.",
     omschrijving:
-      "Jullie team heeft iets bijzonders opgebouwd: een cultuur waarin verbinding, structuur, resultaat én zingeving elkaar versterken in plaats van tegenwerken. " +
-      "Dat is niet vanzelfsprekend — de meeste teams excelleren op één of twee kwadranten en laten de rest liggen. " +
-      "De uitdaging voor jullie is niet groeien, maar behouden: breedte zonder bewuste keuzes leidt tot versnippering en stille vermoeidheid. " +
-      "Blijf investeren in alle vier de assen, ook als de druk toeneemt — juist dan is de verleiding groot om terug te vallen op alleen resultaat of alleen verbinding.",
-    risico: "Versnippering van energie: als alles belangrijk is, wordt niets meer prioriteit.",
-    herkenbaar: "Volwassen coöperaties, purpose-gedreven scale-ups, goed geleide familiebedrijven, toonaangevende zorgorganisaties.",
+      "Jullie combineren lef, proceskracht, eigenaarschap en strategische richting op hoog niveau. " +
+      "Experimenteren en opschalen gaan hand in hand, zonder de menselijke maat te verliezen. " +
+      "Het team leert continu en vertaalt inzichten snel naar betere werkwijzen. " +
+      "De volgende stap is verfijnen: focus houden op impact in plaats van op meer tooling.",
+    risico: "Overbelasting door te veel parallelle initiatieven kan focus en kwaliteit onder druk zetten.",
+    herkenbaar: "Digitale koplopers, productgedreven scale-ups, innovatieve dienstverleners.",
     ideaal: { s: 8.5, p: 8.5, st: 8.5, m: 8.5 },
     dominantKwadrant: "geen",
   },
-
-  // ─── ÉÉN LAAG ──────────────────────────────────────────────────────────────
   {
-    id: "presterende_eilanden",
-    naam: "De Presterende Eilanden",
-    tagline: "Jullie leveren indrukwekkende resultaten — de mens achter het werk verdient meer aandacht.",
+    id: "strategische_koploper",
+    naam: "De Strategische Koploper",
+    tagline: "Jullie weten waar AI heen moet, maar de cultuur blijft nog achter.",
     omschrijving:
-      "Dit team weet hoe het moet presteren: processen kloppen, doelen zijn helder en de missie wordt serieus genomen. " +
-      "Wat er ontbreekt is de onderstroom van echte verbinding — de informele gesprekken, de gezamenlijke lach, het gevoel dat je er niet alleen voor staat. " +
-      "Talent verdwijnt hier niet luid, maar stil: mensen vertrekken of trekken zich terug zonder dat het opvalt, omdat de resultaten op papier nog steeds kloppen. " +
-      "Een kleine investering in de menselijke kant — veiligheid, kwetsbaarheid, plezier — heeft hier een buitenproportioneel groot effect op duurzaamheid en behoud.",
-    risico: "Stil verloop en onzichtbaar talent: de beste mensen vertrekken als eersten.",
-    herkenbaar: "Professionele dienstverlening, IT-teams, advocatenkantoren, academische afdelingen, consultancybureaus.",
+      "Visie, proces en eigenaarschap staan stevig en dat geeft snelheid in besluitvorming. " +
+      "Toch remt beperkte psychologische veiligheid de brede adoptie in het team. " +
+      "Mensen volgen de koers, maar experimenteren nog niet met volle overtuiging. " +
+      "Winst ligt in het normaliseren van leren, twijfel en gedeelde fouten.",
+    risico: "Top-down adoptie zonder draagvlak kan leiden tot schijnvooruitgang.",
+    herkenbaar: "Sterk bestuurde organisaties met duidelijke roadmap en strakke sturing.",
     ideaal: { s: 3.5, p: 8.5, st: 8.5, m: 8.5 },
     dominantKwadrant: "p",
   },
   {
-    id: "inspirerende_chaos",
-    naam: "De Inspirerende Chaos",
-    tagline: "Jullie energie en gedrevenheid zijn aanstekelijk — nu de structuur nog.",
+    id: "vliegende_start",
+    naam: "De Vliegende Start",
+    tagline: "De energie is hoog; nu de basis nog om het duurzaam te maken.",
     omschrijving:
-      "Weinig teams hebben zoveel drive als dit: mensen gaan voor elkaar door het vuur, de doelen zijn ambitieus en het werk voelt zinvol. " +
-      "Maar de structuur die al die energie moet omzetten in consistente resultaten ontbreekt — vergaderingen lopen uit, besluiten worden genomen maar niet uitgevoerd, nieuwe mensen verdwalen in ongeschreven regels. " +
-      "De frustratie die hier ontstaat is niet gebrek aan inzet, maar gebrek aan houvast: mensen weten niet goed wie waarvoor verantwoordelijk is en welke spelregels er eigenlijk gelden. " +
-      "Een relatief kleine investering in heldere afspraken en besluitvormingsstructuur maakt al die goede energie veel effectiever.",
-    risico: "Goede mensen raken uitgeput door de chaos en missen de structuur om hun talent kwijt te kunnen.",
-    herkenbaar: "Startups, creatieve bureaus, jonge zorgteams, maatschappelijke organisaties in groeifase, innovatieafdelingen.",
+      "Er is veel enthousiasme en eigenaarschap rond AI in jullie team. " +
+      "Ook strategisch is de richting voldoende helder om meters te maken. " +
+      "Wat nog ontbreekt is procesduidelijkheid en informatiehygiene voor consistente uitvoering. " +
+      "Met een sterkere operationele basis kan deze energie echt renderen.",
+    risico: "Veel experimenten zonder borging zorgen voor versnippering en dubbel werk.",
+    herkenbaar: "Snelgroeiende teams met pioniersmentaliteit en hoge veranderbereidheid.",
     ideaal: { s: 8.5, p: 3.5, st: 8.5, m: 8.5 },
     dominantKwadrant: "s",
   },
   {
-    id: "warme_stagnatie",
-    naam: "De Warme Stagnatie",
-    tagline: "Jullie zijn een fijn team om deel van uit te maken — en jullie weten zelf ook dat er meer in zit.",
+    id: "afwachtende_massa",
+    naam: "De Afwachtende Massa",
+    tagline: "Het potentieel is groot, maar eigenaarschap blijft nog te smal.",
     omschrijving:
-      "De verbinding in dit team is oprecht: mensen kennen elkaar, helpen elkaar en werken met plezier samen. " +
-      "Maar ergens in de vertaling van goede bedoelingen naar concrete resultaten gaat het mis — rollen zijn vaag, doelen worden niet scherp gemaakt en resultaatverantwoordelijkheid wordt zachtjes vermeden. " +
-      "Het risico is dat 'we zijn een hecht team' een onbewust schild wordt tegen lastige gesprekken over wie wat levert. " +
-      "De winst zit hier in het toevoegen van helderheid zónder de warmte te verliezen — dat is precies het terrein waarop positieve organisaties zich onderscheiden.",
-    risico: "Gezelligheid als excuus: de goede sfeer maskeert gebrek aan resultaatdiscipline totdat het te laat is.",
-    herkenbaar: "Non-profitorganisaties, onderwijsteams, overheidsafdelingen, langlopende projectteams, HR-afdelingen.",
+      "Jullie hebben cultuur, proces en strategische richting redelijk op orde. " +
+      "Toch blijft AI-adoptie hangen omdat individueel initiatief en trekkerschap ontbreken. " +
+      "Mensen wachten op elkaar of op expliciete opdracht voordat ze stappen zetten. " +
+      "Zodra eigenaarschap breder wordt, kan het tempo snel omhoog.",
+    risico: "Goede voorwaarden zonder persoonlijk initiatief leiden tot stilstand.",
+    herkenbaar: "Grotere teams waar veel mogelijk is, maar weinig expliciet belegd.",
     ideaal: { s: 8.5, p: 8.5, st: 3.5, m: 8.5 },
     dominantKwadrant: "s",
   },
   {
-    id: "efficiente_machine",
-    naam: "De Efficiënte Machine",
-    tagline: "Jullie presteren betrouwbaar en gestructureerd — het waarom mag meer ruimte krijgen.",
+    id: "koplopers_zonder_kompas",
+    naam: "Koplopers Zonder Kompas",
+    tagline: "Jullie kunnen veel, maar missen een gedeeld strategisch anker.",
     omschrijving:
-      "Dit team functioneert goed: processen zijn op orde, samenwerking is prettig en resultaten worden gehaald. " +
-      "Wat ontbreekt is het verhaal achter het werk — de reden waarom het ertoe doet, de verbinding met een groter doel dat mensen motiveert ook als het even tegenzit. " +
-      "Dat gemis is op goede dagen nauwelijks voelbaar, maar op moeilijke momenten — reorganisaties, tegenwind, verloop — blijkt het fundament broos. " +
-      "Teams die investeren in zingeving en betekenis worden veerkrachtiger, niet zachter: mensen die weten waarom ze doen wat ze doen, presteren ook beter.",
-    risico: "Motivatieverlies bij tegenwind: mensen voeren uit maar geloven er niet meer in.",
-    herkenbaar: "Grote corporates, productiebedrijven, shared service centers, financiële instellingen, uitvoeringsorganisaties.",
+      "Lef, proces en individueel eigenaarschap zijn sterk aanwezig in het team. " +
+      "Daardoor gebeurt er veel, vaak met indrukwekkende snelheid. " +
+      "Zonder duidelijke strategische kaders blijft impact echter versnipperd en lastig schaalbaar. " +
+      "Een heldere koers maakt van losse successen een duurzaam voordeel.",
+    risico: "Lokale optimalisatie zonder richting veroorzaakt strategische ruis.",
+    herkenbaar: "Innovatieve teams met veel initiatief maar beperkte governance.",
     ideaal: { s: 8.5, p: 8.5, st: 8.5, m: 3.5 },
     dominantKwadrant: "st",
   },
-
-  // ─── TWEE LAAG ─────────────────────────────────────────────────────────────
   {
-    id: "gezellige_bubbel",
-    naam: "De Gezellige Bubbel",
-    tagline: "Jullie hebben een warme basis — nu richting en resultaat er nog bij.",
+    id: "ai_oase",
+    naam: "De AI-Oase",
+    tagline: "Een prettige AI-cultuur, maar nog weinig scherpte op koers en eigenaarschap.",
     omschrijving:
-      "Er is échte verbinding in dit team: mensen zijn betrokken bij elkaar en de onderlinge processen zijn prettig. " +
-      "Maar zowel de resultaatdiscipline als de zingeving ontbreken, waardoor het team vooral naar binnen is gekeerd en de buitenwereld — klanten, organisatie, maatschappij — op afstand blijft. " +
-      "Het gevaar is dat dit team zichzelf als goed functionerend ervaart, terwijl de omgeving het als weinig relevant beschouwt. " +
-      "De eerste stap is niet harder werken, maar het gesprek aangaan over: waar willen we als team écht naartoe, en wat levert ons werk op voor anderen?",
-    risico: "Irrelevantie: een fijn team dat weinig bijdraagt aan de organisatiedoelen verliest uiteindelijk zijn bestaansrecht.",
-    herkenbaar: "Ondersteunende diensten, stafafdelingen, langlopende overheidsprojecten, teams na een fusie of reorganisatie.",
+      "De samenwerking en werkwijze bieden een veilige basis om met AI te werken. " +
+      "Toch ontbreken duidelijke trekkers en strategische prioriteiten. " +
+      "Daardoor voelt AI bruikbaar, maar blijft de doorontwikkeling beperkt. " +
+      "Gerichte keuzes in eigenaarschap en doel maken het verschil.",
+    risico: "Comfort zonder richting houdt de organisatie in pilotstand.",
+    herkenbaar: "Teams met gezonde cultuur die nog zoeken naar strategische focus.",
     ideaal: { s: 8.5, p: 8.5, st: 3.5, m: 3.5 },
     dominantKwadrant: "s",
   },
   {
-    id: "gedreven_cowboys",
-    naam: "De Gedreven Cowboys",
-    tagline: "Jullie halen resultaten en staan voor elkaar klaar — nu het grotere verhaal nog.",
+    id: "bevlogen_hobbyist",
+    naam: "De Bevlogen Hobbyist",
+    tagline: "Enthousiasme genoeg, maar de basis voor opschaling ontbreekt nog.",
     omschrijving:
-      "Dit team heeft pit: de verbinding is sterk, de resultaatgerichtheid ook, en als er iets moet gebeuren gebeurt het. " +
-      "Maar structuur en zingeving ontbreken — het draait om de prestatie van nu, niet om duurzaam floreren op de langere termijn. " +
-      "Mensen raken hier uitstekende professionals, maar missen een context die hun werk betekenisvol maakt buiten het directe resultaat. " +
-      "Het investeren in een helder 'waarom' en werkbare afspraken voorkomt dat de energie van nu ten koste gaat van de mensen van morgen.",
-    risico: "Korte termijn winst, lange termijn verlies: de beste mensen vertrekken als de energie opraakt.",
-    herkenbaar: "Salesteams, crisisteams, vastgoed, handelsbedrijven, commerciële afdelingen van grote organisaties.",
+      "Mensen in jullie team zijn nieuwsgierig en pakken AI proactief op. " +
+      "Dat levert waardevolle initiatieven en veel leerervaringen op. " +
+      "Zonder stabiele processen en strategische kaders blijft het echter afhankelijk van individuen. " +
+      "Met meer structuur wordt dit enthousiasme direct effectiever.",
+    risico: "Persoonlijke experimenten zonder borging blijven los zand.",
+    herkenbaar: "Kleine teams met veel initiatief en beperkte procesvolwassenheid.",
     ideaal: { s: 8.5, p: 3.5, st: 8.5, m: 3.5 },
     dominantKwadrant: "s",
   },
   {
-    id: "bevlogen_gemeenschap",
-    naam: "De Bevlogen Gemeenschap",
-    tagline: "Jullie geloof in de missie en de verbinding onderling zijn een krachtig fundament — nu de uitvoering nog.",
+    id: "veilige_verkenner",
+    naam: "De Veilige Verkenner",
+    tagline: "Jullie verkennen AI zorgvuldig, met richting maar nog weinig uitvoering.",
     omschrijving:
-      "Weinig dingen zijn waardevoller dan een team dat écht gelooft in wat het doet én elkaar graag ziet. " +
-      "Maar zonder heldere structuur en resultaatdiscipline blijft de missie een droom: er wordt veel gepraat over het grotere doel, maar de vertaling naar concrete stappen en verantwoordelijkheden ontbreekt. " +
-      "De frustratie die hier langzaam opbouwt is die van mensen die hard willen bijdragen maar niet goed weten hoe of waarvoor ze precies verantwoordelijk zijn. " +
-      "Een stevige basis op orde — heldere rollen, meetbare doelen — is hier geen bedreiging voor de cultuur, maar de katalysator die al die energie eindelijk productief maakt.",
-    risico: "De missie blijft een droom: energie en betrokkenheid worden verspild zonder structuur om het te realiseren.",
-    herkenbaar: "Ideële organisaties, sociale ondernemingen, nieuwe coöperaties, religieuze instellingen, activistische teams.",
+      "Er is een veilige cultuur en een duidelijke strategische intentie rond AI. " +
+      "Tegelijk blijven werkwijze en individueel eigenaarschap achter in het dagelijks werk. " +
+      "Dat maakt de ambitie geloofwaardig, maar de impact nog beperkt. " +
+      "Door concrete routines en trekkers te organiseren ontstaat momentum.",
+    risico: "Lang verkennen zonder implementatie verlaagt geloofwaardigheid intern.",
+    herkenbaar: "Organisaties met duidelijke visie die operationeel nog opstarten.",
     ideaal: { s: 8.5, p: 3.5, st: 3.5, m: 8.5 },
     dominantKwadrant: "m",
   },
   {
-    id: "resultatenboer",
-    naam: "De Resultatenboer",
-    tagline: "Jullie weten wat succes is en halen het — de mens en het proces mogen meer aandacht.",
+    id: "gereedschapskist",
+    naam: "De Gereedschapskist",
+    tagline: "Jullie hebben de tools en routines, maar AI leeft nog te weinig in de cultuur.",
     omschrijving:
-      "Doelen worden gehaald, de strategie is helder en de missie wordt serieus genomen — dat is meer dan veel teams kunnen zeggen. " +
-      "Maar de investering in mensen en processen is laag: er is weinig psychologische veiligheid, weinig structuur voor samenwerking en mensen voelen zich eerder uitwisselbaar dan gewaardeerd. " +
-      "Dit werkt zolang de markt meewerkt en de resultaten makkelijk komen, maar de organisatie is broos: bij tegenwind of verloop valt de kennis en motivatie weg die nodig is om te herstellen. " +
-      "Een betere basis op het menselijke en procesmatige vlak maakt de resultaten niet minder — maar wel duurzamer.",
-    risico: "Broosheid: zonder menselijk en procesmatig fundament is één crisis genoeg om te destabiliseren.",
-    herkenbaar: "Groeiende scale-ups, handelsbedrijven, resultaatgedreven non-profits, politieke organisaties.",
+      "Processen, tooling en eigenaarschap staan sterk en geven houvast. " +
+      "Toch blijft adoptie soms technisch in plaats van menselijk gedragen. " +
+      "Als onzekerheid of weerstand weinig ruimte krijgt, blijft gebruik oppervlakkig. " +
+      "Meer aandacht voor lef en leerveiligheid vergroot blijvende adoptie.",
+    risico: "Technische implementatie zonder cultuurverandering blijft fragiel.",
+    herkenbaar: "Operationeel sterke organisaties met volwassen procesinrichting.",
+    ideaal: { s: 3.5, p: 8.5, st: 8.5, m: 3.5 },
+    dominantKwadrant: "p",
+  },
+  {
+    id: "we_zien_een_kans",
+    naam: "We Zien een Kans, Wat Nu",
+    tagline: "De wil en de richting zijn er, maar de uitvoer en borging nog niet.",
+    omschrijving:
+      "Strategische ambitie en persoonlijke motivatie zijn aanwezig in jullie team. " +
+      "Daardoor is er potentie voor snelle groei in AI-gereedheid. " +
+      "Wat nu ontbreekt is proceshouvast en een cultuur die experimenteren ondersteunt. " +
+      "Eerst basisafspraken, dan versnellen: dat voorkomt terugval.",
+    risico: "Ambitie zonder structuur leidt tot teleurstelling en energieverlies.",
+    herkenbaar: "Teams met duidelijke intentie die nog geen werkende routine hebben.",
     ideaal: { s: 3.5, p: 3.5, st: 8.5, m: 8.5 },
     dominantKwadrant: "st",
   },
   {
-    id: "professionele_eenzame",
-    naam: "De Professionele Eenzame",
-    tagline: "Jullie zijn vakbekwaam en gedreven — samen zouden jullie veel meer bereiken.",
+    id: "plan_in_de_la",
+    naam: "Het Plan in de La",
+    tagline: "Er is structuur, maar AI mist nog eigenaarschap en strategische urgentie.",
     omschrijving:
-      "Individueel zijn de mensen in dit team sterk: ze werken correct, kennen hun vak en geloven in wat ze doen. " +
-      "Maar de verbinding tussen die mensen en de discipline om gezamenlijk resultaten te boeken ontbreken — men werkt naast elkaar in plaats van met elkaar. " +
-      "Vergaderingen zijn informatief maar niet besluitvormend, kennis wordt niet gedeeld en de collectieve kracht van het team wordt nauwelijks benut. " +
-      "De winst zit hier in samenwerking: niet als sociaal doel, maar als professionele strategie — teams die kennis delen en op elkaar voortbouwen presteren structureel beter.",
-    risico: "Verspilling van collectief talent: de optelsom is minder dan de som der delen.",
-    herkenbaar: "Specialistenteams, onderzoeksgroepen, medische maatschappen, freelance-collectieven, wetenschappelijke instituten.",
-    ideaal: { s: 3.5, p: 8.5, st: 3.5, m: 8.5 },
-    dominantKwadrant: "p",
-  },
-  {
-    id: "loyale_uitvoerder",
-    naam: "De Loyale Uitvoerder",
-    tagline: "Jullie leveren betrouwbaar wat gevraagd wordt — meer mag ook.",
-    omschrijving:
-      "Dit team is de ruggengraat van veel organisaties: processen kloppen, doelen worden gehaald en mensen doen loyaal hun werk. " +
-      "Maar er is weinig dat de mensen bindt aan elkaar of aan een groter verhaal — men voert uit, maar gelooft er niet in, en de verbinding tussen collega's is functioneel maar niet warm. " +
-      "Dat is niet erg zolang de context stabiel is, maar bij verandering — nieuw management, nieuwe strategie, crisis — ontbreekt het adaptief vermogen. " +
-      "Investeren in zingeving en verbinding is hier geen luxe, maar een strategische noodzaak voor de langere termijn.",
-    risico: "Rigiditeit bij verandering: loyaal en correct, maar passieloos en onvoldoende adaptief.",
-    herkenbaar: "Overheidsuitvoeringsorganisaties, grote ondersteunende diensten, administratieve afdelingen, publieke nutsbedrijven.",
-    ideaal: { s: 3.5, p: 8.5, st: 8.5, m: 3.5 },
-    dominantKwadrant: "p",
-  },
-
-  // ─── DRIE LAAG ─────────────────────────────────────────────────────────────
-  {
-    id: "taaie_kern",
-    naam: "De Taaie Kern",
-    tagline: "Jullie verbinding is oprecht en waardevol — gebruik die nu als startpunt voor herstel.",
-    omschrijving:
-      "Temidden van alle uitdagingen is er iets wat veel teams niet hebben: mensen die elkaar écht mogen en voor elkaar willen gaan. " +
-      "Die verbinding is geen bijzaak — het is het fundament waarop herstel gebouwd kan worden, en het is meer waard dan het op dit moment misschien lijkt. " +
-      "Maar zonder structuur, richting en resultaatdiscipline is warmte alleen niet genoeg om het team vooruit te brengen: er is behoefte aan houvast van buitenaf en een duidelijk begin. " +
-      "De eerste stap is klein en concreet: één gedeeld doel voor de komende maand, één heldere afspraak over wie wat doet — en dan voortbouwen op de verbinding die er al is.",
-    risico: "Ontbinding: zonder interventie van buitenaf lost de warmte uiteindelijk op in frustratie.",
-    herkenbaar: "Teams na langdurige onzekerheid, afdelingen na meerdere reorganisaties, zorgteams onder hoge werkdruk.",
-    ideaal: { s: 8.5, p: 3.5, st: 3.5, m: 3.5 },
-    dominantKwadrant: "s",
-  },
-  {
-    id: "holle_structuur",
-    naam: "De Holle Structuur",
-    tagline: "De processen staan — nu alleen nog de mensen en het verhaal er achter.",
-    omschrijving:
-      "Er is iets solides in dit team: de structuren en procedures functioneren, en dat geeft houvast in een verder uitdagende context. " +
-      "Maar de drie andere pijlers ontbreken bijna volledig — er is weinig verbinding, weinig zingeving en weinig resultaatgerichtheid voorbij het uitvoeren van taken. " +
-      "Mensen doen wat gevraagd wordt, maar weten niet goed waarvoor, met wie ze het eigenlijk doen of wat het oplevert. " +
-      "De structuur die er al is vormt een goede basis: de volgende stap is er betekenis en menselijkheid in brengen, en dat begint met het gesprek over wat dit team eigenlijk wil zijn.",
-    risico: "Uitholling: de procedures blijven overeind, maar de mensen die ze uitvoeren haken steeds verder af.",
-    herkenbaar: "Teams na fusies of overnames, afdelingen in krimpende organisaties, uitvoeringslagen van grote bureaucratieën.",
+      "Jullie processen zijn redelijk op orde en dat is een belangrijk fundament. " +
+      "Toch ontbreekt persoonlijke drive en een heldere organisatiebrede AI-koers. " +
+      "Daardoor blijven plannen vaak hangen in documenten en losse initiatieven. " +
+      "Een duidelijke keuze met zichtbare trekkers brengt het plan in beweging.",
+    risico: "Goede voorbereidingen zonder uitvoering zorgen voor verandermoeheid.",
+    herkenbaar: "Procesgerichte organisaties met veel plannen en beperkte implementatiekracht.",
     ideaal: { s: 3.5, p: 8.5, st: 3.5, m: 3.5 },
     dominantKwadrant: "p",
   },
   {
-    id: "ongedeelde_visie",
-    naam: "De Ongedeelde Visie",
-    tagline: "De richting is helder — nu het team er nog achter zien te krijgen.",
+    id: "de_zin_is_er",
+    naam: "De Zin is er",
+    tagline: "De cultuur wil vooruit, maar de rest van het systeem haakt nog niet aan.",
     omschrijving:
-      "Er is een duidelijk doel en iemand — of een kleine groep — die weet waar het naartoe moet. " +
-      "Maar de rest van het team volgt meer dan dat het meedenkt: er is weinig verbinding, weinig gedeelde structuur en weinig gevoel van gezamenlijke zingeving. " +
-      "De trekker(s) raken hier vroeg of laat overbelast, terwijl het team om hen heen onderbezet is in verantwoordelijkheid en betrokkenheid. " +
-      "De sleutel zit in het distribueren van eigenaarschap: niet de strategie bijstellen, maar anderen uitnodigen er deel van uit te maken.",
-    risico: "Overbelasting van de leider en afhankelijkheid: als de trekker wegvalt, valt het team stil.",
-    herkenbaar: "Ondernemingen met een dominante oprichter, kleine bureaus, eenpersoons-geleide projectteams, jonge politieke bewegingen.",
+      "Er is zichtbaar lef en bereidheid om te leren in jullie team. " +
+      "Dat is een sterke start voor duurzame AI-adoptie. " +
+      "Tegelijk ontbreken heldere processen, eigenaarschap en strategische verankering. " +
+      "Met meer structuur en richting kan de energie echt gaan renderen.",
+    risico: "Enthousiasme zonder systeem leidt tot losse pieken zonder doorbraak.",
+    herkenbaar: "Betrokken teams met pioniersenergie en weinig organisatorische steun.",
+    ideaal: { s: 8.5, p: 3.5, st: 3.5, m: 3.5 },
+    dominantKwadrant: "s",
+  },
+  {
+    id: "slapende_reus",
+    naam: "De Slapende Reus",
+    tagline: "De basis is aanwezig, maar het eigenaarschap en doelgevoel blijven te laag.",
+    omschrijving:
+      "Procesmatig is er voldoende kracht om AI volwassen toe te passen. " +
+      "Toch blijft de organisatie traag doordat initiatief en strategisch verhaal ontbreken. " +
+      "Mensen weten vaak hoe het zou kunnen, maar voelen niet dat het nu moet. " +
+      "Met expliciet leiderschap en heldere prioriteit komt deze reus in beweging.",
+    risico: "Onderbenutting van potentieel terwijl concurrenten versnellen.",
+    herkenbaar: "Grotere organisaties met veel capaciteit maar weinig urgentiegevoel.",
+    ideaal: { s: 3.5, p: 8.5, st: 3.5, m: 3.5 },
+    dominantKwadrant: "p",
+  },
+  {
+    id: "eenzame_strateeg",
+    naam: "De Eenzame Strateeg",
+    tagline: "Er is een duidelijke denklijn, maar het team beweegt nog niet mee.",
+    omschrijving:
+      "Iemand of een kleine groep heeft een scherp beeld van AI-richting. " +
+      "De rest van de organisatie mist echter de context, ruimte of ondersteuning om aan te haken. " +
+      "Daardoor blijft vooruitgang afhankelijk van enkele kartrekkers. " +
+      "Breder eigenaarschap en praktische vertaling zijn hier cruciaal.",
+    risico: "Afhankelijkheid van een paar voortrekkers maakt de koers kwetsbaar.",
+    herkenbaar: "Organisaties met sterk strategisch leiderschap en beperkte adoptie op de vloer.",
     ideaal: { s: 3.5, p: 3.5, st: 8.5, m: 3.5 },
     dominantKwadrant: "st",
   },
   {
-    id: "bevlogen_pionier",
-    naam: "De Bevlogen Pionier",
-    tagline: "Jullie geloof in de zaak is indrukwekkend — nu het fundament nog.",
+    id: "papieren_visie",
+    naam: "De Papieren Visie",
+    tagline: "De AI-ambitie staat op papier, maar leeft nog nauwelijks in de praktijk.",
     omschrijving:
-      "Er is iets wat niet gekopieerd kan worden: een team dat diep gelooft in wat het doet en daarvoor wil gaan. " +
-      "Maar zonder structuur, samenwerking en resultaatdiscipline blijft de missie een gevoel in plaats van een werkelijkheid — de energie is er, de uitvoering niet. " +
-      "Dit is vaak het patroon van een beginfase: veel ambitie, weinig systeem, en de overtuiging dat de goede bedoelingen het gebrek aan organisatie zullen compenseren. " +
-      "Ze doen dat niet — maar het goede nieuws is dat de basis van zingeving, die het moeilijkste is om te bouwen, er al is.",
-    risico: "Burnout en desillusie: mensen die hard lopen voor een missie zonder structuur raken eerder uitgeput dan anderen.",
-    herkenbaar: "Jonge NGO's, grassroots-bewegingen, maatschappelijke initiatieven, startups in pre-product fase, activistische collectieven.",
+      "Strategisch is er aandacht voor AI en dat geeft richting op hoofdlijnen. " +
+      "Toch ontbreken de cultuur, processen en eigenaarschap om het uit te voeren. " +
+      "Daardoor blijft AI vooral een beleidsverhaal zonder zichtbaar effect. " +
+      "Kleine, concrete pilots met duidelijke rollen kunnen dit doorbreken.",
+    risico: "Visiedocumenten zonder praktijkresultaat ondermijnen vertrouwen.",
+    herkenbaar: "Organisaties met sterke beleidsfunctie en beperkte implementatiestructuur.",
     ideaal: { s: 3.5, p: 3.5, st: 3.5, m: 8.5 },
     dominantKwadrant: "m",
   },
-
-  // ─── ALLE VIER LAAG ────────────────────────────────────────────────────────
   {
-    id: "uitgeblust",
-    naam: "De Uitgebluste Organisatie",
-    tagline: "Dit vraagt om meer dan een scan — jullie verdienen echte ondersteuning.",
+    id: "digitale_woestijn",
+    naam: "De Digitale Woestijn",
+    tagline: "AI-adoptie staat nog vrijwel stil; dit vraagt om een heldere herstart.",
     omschrijving:
-      "Een score als deze vertelt een verhaal van een team dat het zwaar heeft gehad: verbinding, structuur, richting en zingeving zijn allemaal ver te zoeken. " +
-      "Dat is niet iets wat mensen zichzelf aandoen — het is het resultaat van omstandigheden, druk of een context die het team heeft uitgeput. " +
-      "Een scan kan de situatie benoemen, maar niet oplossen: wat hier nodig is, is een gesprek met mensen die begrijpen hoe organisaties vastlopen en hoe ze weer in beweging komen. " +
-      "Als je dit herkent, is de moed om het in te vullen al een eerste stap — de volgende stap is contact opnemen.",
-    risico: "Verdere uitputting zonder interventie: dit lost zichzelf niet op.",
-    herkenbaar: "Teams na langdurige crisis, organisaties in zwaar vaarwater, afdelingen na traumatische veranderprocessen.",
+      "Lef, werkwijze, eigenaarschap en strategie scoren allemaal laag. " +
+      "Dat wijst op een organisatie die vooral reactief bezig is met dagelijkse drukte. " +
+      "Zonder gerichte interventie blijft AI iets van later, terwijl de omgeving versnelt. " +
+      "Begin klein en concreet, met een haalbaar doel en een zichtbaar eerste succes.",
+    risico: "Langdurige stilstand vergroot de afstand tot markt en medewerkers.",
+    herkenbaar: "Teams onder hoge operationele druk zonder duidelijke AI-koers.",
     ideaal: { s: 3.5, p: 3.5, st: 3.5, m: 3.5 },
     dominantKwadrant: "geen",
   },
-
-  // ─── SPECIAAL: SOLIDE MIDDENVELD (gemiddeld ~5 op alle kwadranten) ──────────
   {
-    id: "solide_middenveld",
-    naam: "Het Solide Middenveld",
-    tagline: "Jullie team functioneert — geen crisis, maar ook nog geen floreren.",
+    id: "zoekende_organisatie",
+    naam: "De Zoekende Organisatie",
+    tagline: "Jullie zitten in het midden: er gebeurt iets, maar nog zonder duidelijke lijn.",
     omschrijving:
-      "Dit is het profiel van een team dat zijn werk doet, redelijk samenwerkt en een gevoel van richting heeft — maar op geen enkel kwadrant echt uitblinkt. " +
-      "Dat is eerlijker en herkenbaarder dan het klinkt: de meeste teams zitten hier een groot deel van de tijd, zeker in periodes van verandering of hoge werkdruk. " +
-      "Het goede nieuws is dat er op alle vier de kwadranten groeipotentieel zit — en dat een kleine, gerichte investering op het laagst scorende kwadrant vaak een buitenproportioneel groot effect heeft op het geheel. " +
-      "Als je bij het invullen het gevoel had dat de vragen moeilijk te beantwoorden waren omdat 'het zo wisselend is' — dan is dat zelf al een waardevol inzicht.",
-    risico: "Comfortabele middelmatigheid: zonder gerichte aandacht blijft het team hangen waar het nu is.",
-    herkenbaar:
-      "Teams in transitie, afdelingen na een reorganisatie, groepen met een nieuw samengestelde samenstelling, organisaties in een stabiele maar weinig uitdagende fase.",
+      "Dit profiel past bij teams die AI serieus nemen, maar nog zoekend zijn in ritme en richting. " +
+      "Er zijn signalen van potentie in alle domeinen, zonder uitgesproken koploperschap. " +
+      "Dat is geen zwakte: het is vaak de natuurlijke fase voor de doorbraak. " +
+      "De sleutel is kiezen waar je als eerste bewust op wilt versnellen.",
+    risico: "Te lang in de verkenfase blijven houdt de opbrengst laag.",
+    herkenbaar: "Organisaties in transitie die stappen zetten maar nog geen vaste vorm hebben.",
     ideaal: { s: 5.0, p: 5.0, st: 5.0, m: 5.0 },
     dominantKwadrant: "geen",
     speciaal: true,
@@ -301,10 +288,10 @@ export function bepaalArchetype(
     : false;
 
   const invoer = {
-    s:  scores.samenwerking,
-    p:  scores.praktijk,
-    st: scores.strategie,
-    m:  scores.missie,
+    s:  scores.lef,
+    p:  scores.werkwijze,
+    st: scores.individu,
+    m:  scores.doel,
   };
 
   // Alle archetypen doen mee — Solide Middenveld wint vanzelf bij ~5 scores

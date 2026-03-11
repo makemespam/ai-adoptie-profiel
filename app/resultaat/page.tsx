@@ -2,10 +2,10 @@ import ResultaatPagina from "@/components/ResultaatPagina";
 import { buildScoresFromAnswers, decodeVToAnswers } from "@/lib/report-url";
 
 type ScorePayload = {
-  samenwerking: { label: string; score: number; vragen: number[] };
-  praktijk: { label: string; score: number; vragen: number[] };
-  strategie: { label: string; score: number; vragen: number[] };
-  missie: { label: string; score: number; vragen: number[] };
+  lef: { label: string; score: number; vragen: number[] };
+  werkwijze: { label: string; score: number; vragen: number[] };
+  individu: { label: string; score: number; vragen: number[] };
+  doel: { label: string; score: number; vragen: number[] };
 };
 
 type ResultaatRouteProps = {

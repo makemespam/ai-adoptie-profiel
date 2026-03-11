@@ -13,10 +13,10 @@ export type Question = {
 };
 
 export type QuadrantId =
-  | "samenwerking"
-  | "praktijk"
-  | "strategie-basis"
-  | "missie-zingeving";
+  | "lef"
+  | "werkwijze"
+  | "individu"
+  | "doel";
 
 export type Quadrant = {
   id: QuadrantId;
@@ -27,222 +27,202 @@ export type Quadrant = {
 
 export const quadrants: Quadrant[] = [
   {
-    id: "samenwerking",
-    name: "Samenwerking",
-    subtitle: "Intern & Flexibel",
+    id: "lef",
+    name: "Lef & Cultuur",
+    subtitle: "Durf & Cultuur",
     feedback:
-      "Jullie kracht zit in verbinding: vertrouwen, openheid en onderlinge steun geven jullie team energie.",
+      "Jullie laten ruimte zien voor experimenten en open gesprekken over AI, ook als het nog schuurt.",
   },
   {
-    id: "praktijk",
-    name: "Praktijk",
-    subtitle: "Spelregels · Inbreng · Initiatief",
+    id: "werkwijze",
+    name: "Werkwijze & Proces",
+    subtitle: "Aanpak & Proces",
     feedback:
-      "Jullie blinken uit in dagelijkse samenwerking: duidelijke werkafspraken en betrokkenheid helpen om stabiel te presteren.",
+      "Jullie werkprocessen en tooling bieden houvast om AI op een bruikbare manier in te zetten.",
   },
   {
-    id: "strategie-basis",
-    name: "Koers & Resultaat",
-    subtitle: "Extern & Beheerst",
+    id: "individu",
+    name: "Individu & Eigenaarschap",
+    subtitle: "Mens & Eigenaarschap",
     feedback:
-      "Jullie hebben een sterke basis: heldere doelen, eigenaarschap en rolverdeling zorgen voor resultaatgericht werken.",
+      "Er is persoonlijk eigenaarschap zichtbaar: mensen nemen initiatief en bouwen AI-vaardigheid op.",
   },
   {
-    id: "missie-zingeving",
-    name: "Missie & Zingeving",
-    subtitle: "Extern & Flexibel",
+    id: "doel",
+    name: "Doel & Strategie",
+    subtitle: "Organisatie & Strategie",
     feedback:
-      "Jullie ervaren betekenis in het werk: talenten worden benut en jullie kijken bewust naar impact buiten het team.",
+      "Jullie koppelen AI-keuzes aan strategische doelen en houden oog voor menselijke regie.",
   },
 ];
 
 export const questions: Question[] = [
   {
     id: "V1",
-    title: "Kwetsbaarheid",
+    title: "Experimenteerruimte",
     prompt:
-      "Denk aan de afgelopen week: als iemand een fout maakte of iets niet wist — was dat iets wat je deelde, of iets wat je liever voor je hield?",
-    quadrantId: "samenwerking",
+      "Denk aan de afgelopen maanden: als iemand een AI-tool uitprobeerde en het werkte niet — werd dat gedeeld als leermoment, of verdween het stil?",
+    quadrantId: "lef",
     anchors: [
-      { key: 1, label: "1–2", text: "Fouten blijven verborgen, niemand laat zich kennen" },
-      { key: 3, label: "3–4", text: "Er is voorzichtigheid, mensen wikken en wegen wat ze delen" },
-      { key: 5, label: "5–6", text: "Soms is er openheid, maar het hangt af van de situatie" },
-      { key: 7, label: "7–8", text: "Er is ruimte voor eerlijkheid, fouten worden bespreekbaar gemaakt" },
-      { key: 9, label: "9–10", text: "Kwetsbaarheid is normaal hier, we leren openlijk van elkaar" },
+      { key: 1, label: "1–2", text: "Mislukkingen blijven verborgen, niemand deelt wat niet werkt" },
+      { key: 3, label: "3–4", text: "Voorzichtigheid — je probeert iets, maar deelt het liever niet" },
+      { key: 5, label: "5–6", text: "Wisselend — soms openheid, afhankelijk van wie het vraagt" },
+      { key: 7, label: "7–8", text: "Experimenteren mag, ook als het mislukt" },
+      { key: 9, label: "9–10", text: "Leren van AI-mislukkingen is normaal en waardevol hier" },
     ],
   },
   {
     id: "V2",
-    title: "Collectieve draagkracht",
+    title: "Bereidheid tot verandering",
     prompt:
-      "Denk aan de afgelopen week: als het druk was, trokken teamleden zich dan terug op hun eigen werk, of pakten jullie het samen op?",
-    quadrantId: "samenwerking",
+      "Denk aan de afgelopen maanden: als een werkproces veranderde door een nieuwe tool — hoe reageerde het team doorgaans?",
+    quadrantId: "lef",
     anchors: [
-      { key: 1, label: "1–2", text: "Ieder redde zichzelf, niemand keek om" },
-      { key: 3, label: "3–4", text: "Af en toe een handje, maar vooral eigen werk eerst" },
-      { key: 5, label: "5–6", text: "Wisselend — soms samen, soms ieder voor zich" },
-      { key: 7, label: "7–8", text: "We hielpen elkaar waar nodig, druk werd gedeeld" },
-      { key: 9, label: "9–10", text: "We herverdeelden samen, niemand bleef er alleen voor staan" },
+      { key: 1, label: "1–2", text: "Weerstand is de norm, verandering wordt vermeden" },
+      { key: 3, label: "3–4", text: "Scepsis overheerst, mensen passen zich aan maar zonder enthousiasme" },
+      { key: 5, label: "5–6", text: "Wisselend — sommigen open, anderen afwachtend" },
+      { key: 7, label: "7–8", text: "Het team past zich goed aan, nieuwe tools worden serieus genomen" },
+      { key: 9, label: "9–10", text: "Verandering wordt omarmd als kans, niet gevreesd als bedreiging" },
     ],
   },
   {
     id: "V3",
-    title: "Energie & plezier",
+    title: "Psychologische veiligheid rond AI",
     prompt:
-      "Denk aan de afgelopen week: hoe vaak was er oprecht en ontspannen contact — een lach, een goed gesprek, iets luchts?",
-    quadrantId: "samenwerking",
+      "Denk aan de afgelopen maanden: voelden mensen de ruimte om te zeggen 'ik snap dit niet' of 'ik vind dit spannend' als het over AI ging?",
+    quadrantId: "lef",
     anchors: [
-      { key: 1, label: "1–2", text: "Het was puur zakelijk, geen ontspanning te bekennen" },
-      { key: 3, label: "3–4", text: "Een moment misschien, maar het voelde gedwongen" },
-      { key: 5, label: "5–6", text: "Hier en daar wat, maar de toon was overwegend serieus" },
-      { key: 7, label: "7–8", text: "Er werd regelmatig gelachen en even bijgepraat" },
-      { key: 9, label: "9–10", text: "Er was echte energie en verbinding, de week voelde licht" },
+      { key: 1, label: "1–2", text: "Onzekerheid over AI wordt niet uitgesproken" },
+      { key: 3, label: "3–4", text: "Mensen doen alsof ze het snappen, ook als dat niet zo is" },
+      { key: 5, label: "5–6", text: "Wisselend — in kleine kring wel, in het grote team niet" },
+      { key: 7, label: "7–8", text: "Er is ruimte voor eerlijkheid over wat je wel en niet weet" },
+      { key: 9, label: "9–10", text: "Onzekerheid over AI is normaal en wordt openlijk besproken" },
     ],
   },
   {
     id: "V4",
-    title: "Spelregels & insluiting",
+    title: "Procesduidelijkheid",
     prompt:
-      "Denk aan de afgelopen week: waren de spelregels — ook de ongeschreven — helder voor iedereen, ook voor wie er nog niet lang bij zit?",
-    quadrantId: "praktijk",
+      "Denk aan jullie dagelijkse werkprocessen: zijn die voldoende gedocumenteerd en voorspelbaar om te bepalen waar AI zou kunnen helpen?",
+    quadrantId: "werkwijze",
     anchors: [
-      { key: 1, label: "1–2", text: "Veel ongeschreven regels, je moet ze zelf maar ontdekken" },
-      { key: 3, label: "3–4", text: "Sommige dingen zijn duidelijk, maar er is ook veel gissen" },
-      { key: 5, label: "5–6", text: "Het is redelijk helder, maar voor nieuwkomers nog wennen" },
-      { key: 7, label: "7–8", text: "De meeste regels zijn transparant en worden uitgelegd" },
-      { key: 9, label: "9–10", text: "Iedereen weet hoe het werkt hier, ook wie er net bij is" },
+      { key: 1, label: "1–2", text: "Processen leven in hoofden, niet op papier — AI heeft geen aanknopingspunt" },
+      { key: 3, label: "3–4", text: "Sommige processen zijn helder, veel loopt op gevoel en ervaring" },
+      { key: 5, label: "5–6", text: "Redelijk gedocumenteerd, maar inconsistent uitgevoerd" },
+      { key: 7, label: "7–8", text: "Processen zijn helder genoeg om te analyseren waar AI waarde toevoegt" },
+      { key: 9, label: "9–10", text: "Processen zijn transparant, meetbaar en klaar voor AI-integratie" },
     ],
   },
   {
     id: "V5",
-    title: "Vergaderdynamiek",
+    title: "Basiskennis & tooling",
     prompt:
-      "Denk aan de afgelopen week: voelden alle teamleden de ruimte om zich uit te spreken, of waren het steevast dezelfde mensen die het woord namen?",
-    quadrantId: "praktijk",
+      "Denk aan de afgelopen maanden: in hoeverre gebruiken mensen in het team al AI-tools in hun dagelijkse werk?",
+    quadrantId: "werkwijze",
     anchors: [
-      { key: 1, label: "1–2", text: "Een enkeling bepaalt het gesprek, de rest zwijgt" },
-      { key: 3, label: "3–4", text: "Er is enige variatie, maar de patronen zijn herkenbaar" },
-      { key: 5, label: "5–6", text: "Wisselend — soms komen meer mensen aan het woord" },
-      { key: 7, label: "7–8", text: "De meesten spreken zich uit, stille stemmen worden uitgenodigd" },
-      { key: 9, label: "9–10", text: "Iedereen deed mee, alle perspectieven kwamen aan bod" },
+      { key: 1, label: "1–2", text: "Nauwelijks — AI is een abstract begrip, geen praktijk" },
+      { key: 3, label: "3–4", text: "Enkele mensen experimenteren, de meesten niet" },
+      { key: 5, label: "5–6", text: "Een deel van het team gebruikt AI-tools, maar niet structureel" },
+      { key: 7, label: "7–8", text: "AI-tools worden regelmatig en bewust ingezet door meerdere mensen" },
+      { key: 9, label: "9–10", text: "AI is geintegreerd in de dagelijkse werkpraktijk van het hele team" },
     ],
   },
   {
     id: "V6",
-    title: "Motivatie & eigenaarschap",
+    title: "Data & informatiehygiene",
     prompt:
-      "Denk aan de afgelopen week: deed je je werk vooral omdat het moest, of omdat je het zelf wilde doen?",
-    quadrantId: "praktijk",
+      "Denk aan jullie informatie: is die voldoende gestructureerd, actueel en toegankelijk om er AI zinvol op los te laten?",
+    quadrantId: "werkwijze",
     anchors: [
-      { key: 1, label: "1–2", text: "Het voelde als een verplichting, er was weinig eigen keuze of drive" },
-      { key: 3, label: "3–4", text: "Vooral taken afwerken — af en toe iets wat energie gaf, maar niet structureel" },
-      { key: 5, label: "5–6", text: "Wisselend — soms gedreven, soms plichtshalve" },
-      { key: 7, label: "7–8", text: "Grotendeels vanuit eigen motivatie, het werk voelde als van jou" },
-      { key: 9, label: "9–10", text: "Volledig gedreven van binnenuit — je deed deze week precies wat bij jou past en waar je voor staat" },
+      { key: 1, label: "1–2", text: "Data zit verspreid, is verouderd of nauwelijks toegankelijk" },
+      { key: 3, label: "3–4", text: "Sommige informatie is op orde, maar het is geen bewust beleid" },
+      { key: 5, label: "5–6", text: "Redelijk — maar er zijn gaten die AI-gebruik bemoeilijken" },
+      { key: 7, label: "7–8", text: "Informatie is grotendeels gestructureerd en bruikbaar als input voor AI" },
+      { key: 9, label: "9–10", text: "Data is schoon, actueel en strategisch beheerd als organisatiekapitaal" },
     ],
   },
   {
     id: "V7",
-    title: "Heldere kaders",
+    title: "Intrinsieke motivatie",
     prompt:
-      "Denk aan de afgelopen week: waren de doelen voor jouw team concreet en meetbaar, of voelden ze vaag en voor meerdere uitleg vatbaar?",
-    quadrantId: "strategie-basis",
+      "Denk aan de afgelopen maanden: onderzochten mensen uit zichzelf hoe AI hun werk makkelijker of beter kon maken — of wachtten ze tot het van bovenaf kwam?",
+    quadrantId: "individu",
     anchors: [
-      { key: 1, label: "1–2", text: "Doelen zijn vaag, iedereen interpreteert ze anders" },
-      { key: 3, label: "3–4", text: "Er is een richting, maar concrete kaders ontbreken" },
-      { key: 5, label: "5–6", text: "Sommige doelen zijn helder, andere niet" },
-      { key: 7, label: "7–8", text: "De meeste doelen zijn concreet en voor iedereen duidelijk" },
-      { key: 9, label: "9–10", text: "Glashelder — iedereen weet wat succes er deze week uitziet" },
+      { key: 1, label: "1–2", text: "AI wordt als opdracht ervaren, niet als kans" },
+      { key: 3, label: "3–4", text: "Een enkeling is nieuwsgierig, de meesten wachten af" },
+      { key: 5, label: "5–6", text: "Wisselend — afhankelijk van de persoon en het moment" },
+      { key: 7, label: "7–8", text: "Meerdere mensen verkennen actief wat AI voor hen kan betekenen" },
+      { key: 9, label: "9–10", text: "Het team is van binnenuit gedreven om AI slim in te zetten" },
     ],
   },
   {
     id: "V8",
-    title: "Duidelijke rolverdeling",
+    title: "Eigenaarschap & trekkers",
     prompt:
-      "Denk aan de afgelopen week: wist iedereen wie waarvoor verantwoordelijk was, zonder dat je dat eerst hoefde uit te zoeken?",
-    quadrantId: "strategie-basis",
+      "Denk aan jullie organisatie: is er iemand — of een kleine groep — die AI actief trekt, kennis deelt en anderen meeneemt?",
+    quadrantId: "individu",
     anchors: [
-      {
-        key: 1,
-        label: "1–2",
-        text: "Rollen overlappen of zijn onduidelijk, er valt regelmatig iets tussen wal en schip",
-      },
-      { key: 3, label: "3–4", text: "Globaal is het duidelijk, maar in de details is het zoeken" },
-      { key: 5, label: "5–6", text: "Redelijk helder, maar af en toe is er verwarring over wie wat oppakt" },
-      { key: 7, label: "7–8", text: "De meeste rollen zijn helder en worden ook zo beleefd" },
-      {
-        key: 9,
-        label: "9–10",
-        text: "Iedereen weet precies wat zijn of haar bijdrage is deze week",
-      },
+      { key: 1, label: "1–2", text: "Niemand pakt AI echt op — het zweeft" },
+      { key: 3, label: "3–4", text: "Er is interesse maar geen duidelijke trekker" },
+      { key: 5, label: "5–6", text: "Een persoon trekt, maar de rest volgt nauwelijks" },
+      { key: 7, label: "7–8", text: "Er is een herkenbare AI-trekker die anderen actief betrekt" },
+      { key: 9, label: "9–10", text: "Eigenaarschap over AI is breed verdeeld en zelforganiserend" },
     ],
   },
   {
     id: "V9",
-    title: "Gezamenlijk eigenaarschap",
+    title: "Capaciteit & ruimte",
     prompt:
-      "Denk aan de afgelopen week: als jij twee dagen afwezig was geweest — had het team dan gewoon doorgelopen, of was er van alles blijven liggen op jouw stukken?",
-    quadrantId: "strategie-basis",
+      "Denk aan de afgelopen maanden: was er in de praktijk tijd en mentale ruimte om te experimenteren met AI — of verdween het onder de dagelijkse drukte?",
+    quadrantId: "individu",
     anchors: [
-      { key: 1, label: "1–2", text: "Veel zou zijn blijven liggen, ik ben onmisbaar voor te veel" },
-      { key: 3, label: "3–4", text: "Een deel loopt door, maar kritieke dingen wachten op mij" },
-      { key: 5, label: "5–6", text: "Wisselend — sommige dingen lopen, andere niet" },
-      { key: 7, label: "7–8", text: "Het meeste loopt gewoon door, het team pakt het op" },
-      { key: 9, label: "9–10", text: "Het team draait volledig zelfstandig, eigenaarschap zit breed verankerd" },
+      { key: 1, label: "1–2", text: "Geen ruimte — overleven staat voorop" },
+      { key: 3, label: "3–4", text: "Incidenteel een moment, maar het wordt steeds verdrongen" },
+      { key: 5, label: "5–6", text: "Soms ruimte, maar niet structureel geborgd" },
+      { key: 7, label: "7–8", text: "Er wordt bewust tijd vrijgemaakt voor AI-exploratie" },
+      { key: 9, label: "9–10", text: "AI-ontwikkeling is structureel ingebouwd in de werkweek" },
     ],
   },
   {
     id: "V10",
-    title: "Hoger doel",
+    title: "Strategische visie",
     prompt:
-      "Denk aan de afgelopen week: voelde het dagelijkse werk als een bijdrage aan iets wat er echt toe doet, of was het vooral taken afwerken?",
-    quadrantId: "missie-zingeving",
+      "Denk aan de koers van jullie organisatie: is er een helder beeld van wat AI moet bijdragen — of wordt er vooral gereageerd op wat anderen doen?",
+    quadrantId: "doel",
     anchors: [
-      { key: 1, label: "1–2", text: "Het werk voelde zinloos of louter functioneel" },
-      { key: 3, label: "3–4", text: "Af en toe een moment van betekenis, maar niet structureel" },
-      { key: 5, label: "5–6", text: "Soms voelt het als meer dan taken, maar het is niet vanzelfsprekend" },
-      {
-        key: 7,
-        label: "7–8",
-        text: "Regelmatig het gevoel dat we ergens aan bijdragen dat groter is",
-      },
-      {
-        key: 9,
-        label: "9–10",
-        text: "Elke dag voelde als een betekenisvolle bijdrage aan het grotere doel",
-      },
+      { key: 1, label: "1–2", text: "Geen visie op AI — we zien wel wat er komt" },
+      { key: 3, label: "3–4", text: "Er is een gevoel van urgentie maar geen richting" },
+      { key: 5, label: "5–6", text: "Enkele ideeen, maar geen gedeeld beeld" },
+      { key: 7, label: "7–8", text: "Er is een heldere richting voor AI die breed bekend is" },
+      { key: 9, label: "9–10", text: "AI-strategie is concreet, gedragen en verbonden aan organisatiedoelen" },
     ],
   },
   {
     id: "V11",
-    title: "Sterke kanten benutten",
+    title: "Leiderschap & voorbeeldgedrag",
     prompt:
-      "Denk aan de afgelopen week: had jij de ruimte om jouw unieke kwaliteiten op jouw eigen manier in te zetten?",
-    quadrantId: "missie-zingeving",
+      "Denk aan de leiders in jullie organisatie: gebruiken zij zelf AI-tools en laten zij zien hoe ze daarmee omgaan — inclusief de twijfels?",
+    quadrantId: "doel",
     anchors: [
-      { key: 1, label: "1–2", text: "Nauwelijks — het werk past niet bij wat ik goed kan" },
-      { key: 3, label: "3–4", text: "Soms een glimp, maar de ruimte is beperkt" },
-      { key: 5, label: "5–6", text: "Wisselend — soms in mijn kracht, soms niet" },
-      { key: 7, label: "7–8", text: "Grotendeels wel, ik kon deze week doen waar ik goed in ben" },
-      { key: 9, label: "9–10", text: "Volledig in mijn kracht — ik deed deze week precies wat bij mij past" },
+      { key: 1, label: "1–2", text: "Leiders spreken over AI maar gebruiken het zelf niet" },
+      { key: 3, label: "3–4", text: "Incidenteel voorbeeldgedrag, maar niet structureel" },
+      { key: 5, label: "5–6", text: "Wisselend — sommige leiders wel, anderen niet" },
+      { key: 7, label: "7–8", text: "Leiders laten regelmatig zien hoe zij AI inzetten" },
+      { key: 9, label: "9–10", text: "Leiderschap en AI-gebruik zijn onlosmakelijk verbonden — inclusief openheid over onzekerheid" },
     ],
   },
   {
     id: "V12",
-    title: "Leren & ontwikkeling",
+    title: "Ethiek & menselijke regie",
     prompt:
-      "Denk aan de afgelopen week: was er ruimte om te groeien — door iets nieuws te proberen, van elkaar te leren, of te reflecteren op wat beter kon?",
-    quadrantId: "missie-zingeving",
+      "Denk aan jullie AI-gebruik: is er bewust nagedacht over waar AI wel en niet wordt ingezet, en wie de uiteindelijke beslissingen neemt?",
+    quadrantId: "doel",
     anchors: [
-      { key: 1, label: "1–2", text: "Geen ruimte voor reflectie of ontwikkeling, overleven stond voorop" },
-      { key: 3, label: "3–4", text: "Incidenteel een moment, maar leren was geen vanzelfsprekend onderdeel van de week" },
-      { key: 5, label: "5–6", text: "Soms was er ruimte, maar het was niet structureel of voor iedereen gelijk" },
-      { key: 7, label: "7–8", text: "Er was bewust aandacht voor groei — mensen deelden inzichten en reflecteerden samen" },
-      {
-        key: 9,
-        label: "9–10",
-        text: "Leren zat ingebakken in de week — we groeiden zichtbaar als team",
-      },
+      { key: 1, label: "1–2", text: "Geen bewuste keuzes — AI wordt gebruikt zonder kaders" },
+      { key: 3, label: "3–4", text: "Incidenteel nagedacht, maar geen gedeeld beleid" },
+      { key: 5, label: "5–6", text: "Er zijn enkele afspraken, maar niet iedereen kent ze" },
+      { key: 7, label: "7–8", text: "Er zijn heldere kaders over verantwoord AI-gebruik" },
+      { key: 9, label: "9–10", text: "Menselijke regie over AI is bewust georganiseerd en regelmatig herijkt" },
     ],
   },
 ];

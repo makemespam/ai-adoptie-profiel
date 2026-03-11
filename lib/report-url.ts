@@ -3,10 +3,10 @@ import { kwadrantLabels } from "@/lib/copy";
 export const QUESTION_COUNT = 12;
 
 export type ScorePayload = {
-  samenwerking: { label: string; score: number; vragen: number[] };
-  praktijk: { label: string; score: number; vragen: number[] };
-  strategie: { label: string; score: number; vragen: number[] };
-  missie: { label: string; score: number; vragen: number[] };
+  lef: { label: string; score: number; vragen: number[] };
+  werkwijze: { label: string; score: number; vragen: number[] };
+  individu: { label: string; score: number; vragen: number[] };
+  doel: { label: string; score: number; vragen: number[] };
 };
 
 export function encodeAnswersToV(answers: number[]): string {
@@ -25,18 +25,18 @@ export function decodeVToAnswers(v: string): number[] | null {
 }
 
 export function buildScoresFromAnswers(answers: number[]): ScorePayload {
-  const samenwerking = answers.slice(0, 3);
-  const praktijk = answers.slice(3, 6);
-  const strategie = answers.slice(6, 9);
-  const missie = answers.slice(9, 12);
+  const lef = answers.slice(0, 3);
+  const werkwijze = answers.slice(3, 6);
+  const individu = answers.slice(6, 9);
+  const doel = answers.slice(9, 12);
 
   const avg = (values: number[]) =>
     values.length ? Number((values.reduce((sum, value) => sum + value, 0) / values.length).toFixed(1)) : 0;
 
   return {
-    samenwerking: { label: kwadrantLabels.samenwerking, score: avg(samenwerking), vragen: samenwerking },
-    praktijk: { label: kwadrantLabels.praktijk, score: avg(praktijk), vragen: praktijk },
-    strategie: { label: kwadrantLabels.strategie, score: avg(strategie), vragen: strategie },
-    missie: { label: kwadrantLabels.missie, score: avg(missie), vragen: missie },
+    lef: { label: kwadrantLabels.lef, score: avg(lef), vragen: lef },
+    werkwijze: { label: kwadrantLabels.werkwijze, score: avg(werkwijze), vragen: werkwijze },
+    individu: { label: kwadrantLabels.individu, score: avg(individu), vragen: individu },
+    doel: { label: kwadrantLabels.doel, score: avg(doel), vragen: doel },
   };
 }
