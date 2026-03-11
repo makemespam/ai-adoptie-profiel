@@ -48,5 +48,5 @@ export const uitlegCopy = {
 Niet de technologie is het vertrekpunt — de mensen en de cultuur zijn dat.
 De 12 vragen zijn een momentopname, geen eindoordeel.
 Een vertrekpunt voor een eerlijk gesprek.`,
-  graphicPad: "/images/quinn-positieve-organisatie-scan.png",
+  graphicPad: "/wild-model.png",
 };
