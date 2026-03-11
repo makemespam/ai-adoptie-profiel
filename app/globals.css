@@ -1,20 +1,101 @@
-@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;0,800;1,400;1,700&family=Roboto:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  /* Bureautje Aap huisstijl */
+  --background: #111111;
+  --background-secondary: #D8F5D8;
+  --foreground: #FFFFFF;
+  --foreground-light: #111111;
+  --accent: #C8F5C8;
+  --accent-hover: #2D7A3A;
+
+  /* Kwadrantkleuren */
+  --kwadrant-lef: #2D7A3A;
+  --kwadrant-werkwijze: #1A4D2E;
+  --kwadrant-individu: #7BC47F;
+  --kwadrant-doel: #111111;
+
+  /* Scorebanden */
+  --score-urgent: #B03A2E;
+  --score-aandacht: #B03A2E;
+  --score-ontwikkeling: #C87F2A;
+  --score-goed: #2D7A3A;
+  --score-sterk: #1A4D2E;
+
+  /* Scorewoordkleuren (resultaatpagina) */
+  --scorewoord-urgent: #E57373;
+  --scorewoord-ontwikkeling: #FFB74D;
+  --scorewoord-goed: #81C784;
+  --scorewoord-sterk: #2D7A3A;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Roboto", sans-serif;
-  --font-display: "Alegreya Sans", Georgia, serif;
+  --font-sans: var(--font-body), Inter, sans-serif;
+  --font-display: var(--font-heading), "Alfa Slab One", serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Roboto", "Segoe UI", sans-serif;
+  font-family: var(--font-body), Inter, sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading), "Alfa Slab One", serif;
+}
+
+p, label, button {
+  font-family: var(--font-body), Inter, sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2D7A3A;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1A4D2E;
+}
+
+/* Range slider - Bureautje Aap */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #333333;
+  height: 8px;
+  border-radius: 999px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--kwadrant-thumb, #2D7A3A);
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--kwadrant-thumb, #2D7A3A);
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }

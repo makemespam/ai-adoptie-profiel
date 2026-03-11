@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Alfa_Slab_One, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const alfaSlabOne = Alfa_Slab_One({
+  weight: "400",
   subsets: ["latin"],
+  variable: "--font-heading",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-body",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ export default function RootLayout({
         <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${alfaSlabOne.variable} ${inter.variable} antialiased`}
       >
         {children}
         <Script

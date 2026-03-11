@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { getAnchorForScore, getScoreLabel, quadrants, questions } from "@/lib/scan-config";
 import { encodeAnswersToV } from "@/lib/report-url";
 import { uitlegCopy } from "@/lib/copy";
+import Logo from "@/components/Logo";
 
 type Step = "welcome" | "questions" | "lead";
 
@@ -15,12 +16,15 @@ type Lead = {
   email: string;
 };
 
-const brand = {
-  oranje: "#f79648",
-  donkerrood: "#c86059",
-  blauw: "#314a7b",
-  groen: "#006d82",
+/* Bureautje Aap huisstijl */
+const kwadrantKleuren: Record<string, string> = {
+  lef: "#2D7A3A",
+  werkwijze: "#1A4D2E",
+  individu: "#7BC47F",
+  doel: "#111111",
 };
+const accent = "#C8F5C8";
+const accentHover = "#2D7A3A";
 
 export default function Home() {
   const router = useRouter();
@@ -66,27 +70,27 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-slate-900">
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+    <div className="min-h-screen bg-[#111111] text-white">
+      <header className="sticky top-0 z-50 bg-[#111111] border-b border-[#2A2A2A]">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Image src="/logo.png" alt="Bureautje Aap" width={120} height={40} className="object-contain" />
-          <div className="text-xs text-gray-400">AI Adoptie Profiel — de WILD-scan</div>
+          <Logo />
+          <div className="text-[0.9rem] text-white/80 font-body" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>AI Adoptie Profiel — de WILD-scan</div>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-2xl rounded-3xl border border-gray-100 bg-white p-5 shadow-sm mt-6 mb-8 sm:p-8">
+      <main className="mx-auto w-full max-w-2xl rounded-2xl border border-[#2A2A2A] bg-[#1A1A1A] p-5 mt-6 mb-8 sm:p-8" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
         {step === "welcome" && (
           <section className="space-y-6">
-            <div className="inline-flex rounded-full px-3 py-1 text-sm font-medium" style={{ background: "#e8f4f0", color: brand.groen }}>
+            <h1 className="text-white leading-tight" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif", fontSize: "clamp(2.5rem, 6vw, 4rem)" }}>
               AI Adoptie Profiel
-            </div>
-            <h1 className="text-3xl font-bold leading-tight text-slate-900 sm:text-4xl" style={{ fontFamily: "'Alegreya Sans', Georgia, serif" }}>
-              In 5 minuten inzicht in jullie AI-gereedheid
             </h1>
-            <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="text-[#C8F5C8] text-[1.25rem] tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+              De WILD-scan
+            </p>
+            <p className="text-white text-base max-w-[600px] mx-auto text-center leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif", lineHeight: 1.6 }}>
               Deze WILD-scan is een korte momentopname van de afgelopen periode. Er zijn geen goede of
               foute antwoorden: je ontdekt waar jullie AI-adoptie al sterk is en waar groeikansen liggen.
             </p>
-            <ul className="space-y-2 rounded-2xl bg-slate-100 p-4 text-sm text-slate-700">
+            <ul className="space-y-2 rounded-2xl bg-[#1A1A1A] border border-[#2A2A2A] p-4 text-sm text-white/90">
               <li>12 vragen verdeeld over 4 kwadranten</li>
               <li>Slider van 1 tot 10 met duidelijke betekenis per score</li>
               <li>Direct een visueel resultaat met persoonlijk feedbacksignaal</li>
@@ -94,18 +98,18 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setStep("questions")}
-              className="inline-flex min-h-12 items-center justify-center rounded-xl px-6 py-3 text-base font-semibold text-white transition focus:outline-none focus-visible:ring-2"
-              style={{ background: `linear-gradient(135deg, ${brand.groen}, ${brand.blauw})` }}
+              className="inline-flex min-h-12 items-center justify-center rounded-full px-8 py-3 text-base font-semibold transition focus:outline-none focus-visible:ring-2 hover:bg-[#2D7A3A] hover:text-white"
+              style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
             >
               Start de scan
             </button>
 
-            <details className="rounded-2xl border border-slate-200 bg-white p-4">
-              <summary className="cursor-pointer text-sm font-semibold" style={{ color: brand.groen }}>
+            <details className="rounded-2xl border border-[#2A2A2A] bg-[#1A1A1A] p-4">
+              <summary className="cursor-pointer text-sm font-semibold" style={{ color: accent }}>
                 {uitlegCopy.titel}
               </summary>
               <div className="mt-3 space-y-3">
-                <p className="text-sm leading-relaxed text-slate-600">{uitlegCopy.toelichting}</p>
+                <p className="text-sm leading-relaxed text-white/80">{uitlegCopy.toelichting}</p>
                 <Image
                   src={uitlegCopy.graphicPad}
                   alt="Visual van het WILD-model"
@@ -121,19 +125,19 @@ export default function Home() {
         {step === "questions" && (
           <section className="space-y-6">
             <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm text-slate-600">
+              <div className="flex items-center justify-between text-sm text-white/80">
                 <span>
                   Vraag {currentQuestionIndex + 1} van {questions.length}
                 </span>
                 <span>{Math.round(progress)}%</span>
               </div>
-              <div className="h-2 rounded-full bg-slate-200">
+              <div className="h-[6px] rounded-full bg-[#1A4D2E] overflow-hidden">
                 <motion.div
                   className="h-full rounded-full"
                   initial={false}
                   animate={{ width: `${progress}%` }}
                   transition={{ duration: 0.35 }}
-                  style={{ background: brand.groen }}
+                  style={{ background: accent }}
                 />
               </div>
             </div>
@@ -148,16 +152,19 @@ export default function Home() {
                 className="space-y-5"
               >
                 <div className="space-y-3">
-                  <p className="text-sm font-medium uppercase tracking-wide" style={{ color: brand.groen }}>
+                  <span
+                    className="inline-flex rounded-full px-4 py-1 text-[0.8rem] font-medium uppercase tracking-[0.1em] text-white"
+                    style={{ background: kwadrantKleuren[currentQuestion.quadrantId] ?? "#2D7A3A", fontFamily: "var(--font-body), Inter, sans-serif" }}
+                  >
                     {currentQuestion.id} · {quadrants.find((item) => item.id === currentQuestion.quadrantId)?.name}
-                  </p>
-                  <h2 className="text-2xl font-semibold text-slate-900" style={{ fontFamily: "'Alegreya Sans', Georgia, serif" }}>{currentQuestion.title}</h2>
-                  <p className="leading-relaxed text-slate-600">{currentQuestion.prompt}</p>
+                  </span>
+                  <h2 className="text-white text-[1.4rem]" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>{currentQuestion.title}</h2>
+                  <p className="leading-relaxed text-[#C8F5C8] text-[0.95rem] italic" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>{currentQuestion.prompt}</p>
                 </div>
 
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
-                  <label htmlFor="score" className="mb-3 block text-sm font-medium text-slate-700">
-                    Jouw score: <span className="font-semibold" style={{ color: brand.groen }}>{currentScore}</span>
+                <div className="rounded-2xl border border-[#2A2A2A] bg-[#1A1A1A] p-4 sm:p-5">
+                  <label htmlFor="score" className="mb-3 block text-sm font-medium text-white">
+                    Jouw score: <span className="font-semibold" style={{ color: accent }}>{currentScore}</span>
                   </label>
                   <input
                     id="score"
@@ -170,15 +177,29 @@ export default function Home() {
                       setAnswers((prev) => prev.map((score, index) => (index === currentQuestionIndex ? newValue : score)));
                     }}
                     className="h-4 w-full cursor-pointer"
-                    style={{ accentColor: brand.groen }}
+                    style={{ ["--kwadrant-thumb" as string]: kwadrantKleuren[currentQuestion.quadrantId] ?? accent } as React.CSSProperties}
                   />
-                  <div className="mt-4 rounded-xl border p-3" style={{ borderColor: "#c8dae5", background: "#eef5f8" }}>
-                    <p className="text-sm font-semibold" style={{ color: brand.blauw }}>
+                  <div className="mt-4 rounded-xl border border-[#2A2A2A] p-3 bg-[#111111]">
+                    <p className="text-sm font-semibold text-white">
                       Betekenis
                     </p>
-                    <p className="mt-1 text-sm" style={{ color: brand.blauw }}>
+                    <p className="mt-1 text-sm text-[#C8F5C8]">
                       {currentScoreLabel} · {currentAnchor.text}
                     </p>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2 text-[0.8rem]" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+                    {currentQuestion.anchors.map((a) => {
+                      const isActive = currentAnchor.key === a.key;
+                      return (
+                        <span
+                          key={a.key}
+                          className={isActive ? "font-semibold" : ""}
+                          style={{ color: isActive ? accent : "#888888" }}
+                        >
+                          {a.label}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -187,15 +208,16 @@ export default function Home() {
                     type="button"
                     onClick={handlePreviousQuestion}
                     disabled={currentQuestionIndex === 0}
-                    className="inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex min-h-12 items-center justify-center rounded-full border-2 px-5 py-3 text-sm font-semibold transition hover:bg-[#C8F5C8] hover:text-[#111111] disabled:cursor-not-allowed disabled:opacity-50"
+                    style={{ background: "transparent", borderColor: accent, color: accent, fontFamily: "var(--font-body), Inter, sans-serif" }}
                   >
                     Vorige
                   </button>
                   <button
                     type="button"
                     onClick={handleNextQuestion}
-                    className="inline-flex min-h-12 items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white transition"
-                    style={{ background: brand.groen }}
+                    className="inline-flex min-h-12 items-center justify-center rounded-full px-8 py-3 text-base font-semibold transition hover:bg-[#2D7A3A] hover:text-white"
+                    style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
                   >
                     {currentQuestionIndex === questions.length - 1 ? "Naar je resultaat" : "Volgende"}
                   </button>
@@ -207,15 +229,15 @@ export default function Home() {
 
         {step === "lead" && (
           <section className="space-y-6">
-            <h2 className="text-2xl font-semibold text-slate-900" style={{ fontFamily: "'Alegreya Sans', Georgia, serif" }}>Ontvang je resultaten en uitgebreide rapport</h2>
-            <p className="text-slate-600">
+            <h2 className="text-2xl font-semibold text-white" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>Ontvang je resultaten en uitgebreide rapport</h2>
+            <p className="text-white/90" style={{ fontFamily: "var(--font-body), Inter, sans-serif", lineHeight: 1.6 }}>
               Vul je naam en e-mailadres in. Dan kun je direct door naar je WILD-resultaat en is de
               e-mailafhandeling voorbereid voor verzending.
             </p>
 
             <form onSubmit={handleLeadSubmit} className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium text-slate-700">
+                <label htmlFor="name" className="text-sm font-medium text-white" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
                   Naam
                 </label>
                 <input
@@ -224,13 +246,13 @@ export default function Home() {
                   required
                   value={lead.name}
                   onChange={(event) => setLead((prev) => ({ ...prev, name: event.target.value }))}
-                  className="min-h-12 w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-200"
+                  className="min-h-12 w-full rounded-lg border border-[#2A2A2A] bg-[#111111] px-4 py-3 text-white outline-none transition focus:border-[#C8F5C8] focus:ring-2 focus:ring-[#C8F5C8]/30"
                   placeholder="Jouw naam"
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                <label htmlFor="email" className="text-sm font-medium text-white" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
                   E-mailadres
                 </label>
                 <input
@@ -239,7 +261,7 @@ export default function Home() {
                   required
                   value={lead.email}
                   onChange={(event) => setLead((prev) => ({ ...prev, email: event.target.value }))}
-                  className="min-h-12 w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-200"
+                  className="min-h-12 w-full rounded-lg border border-[#2A2A2A] bg-[#111111] px-4 py-3 text-white outline-none transition focus:border-[#C8F5C8] focus:ring-2 focus:ring-[#C8F5C8]/30"
                   placeholder="naam@bedrijf.nl"
                 />
               </div>
@@ -247,17 +269,18 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={isSubmittingLead}
-                className="inline-flex min-h-12 items-center justify-center rounded-xl px-6 py-3 text-base font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-60"
-                style={{ background: `linear-gradient(135deg, ${brand.oranje}, ${brand.donkerrood})` }}
+                className="inline-flex min-h-12 items-center justify-center rounded-full px-8 py-3 text-base font-semibold transition hover:bg-[#2D7A3A] hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+                style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
               >
-                {isSubmittingLead ? "Bezig met verwerken..." : "Bekijk mijn resultaat"}
+                {isSubmittingLead ? "Bezig met verwerken..." : "Verstuur"}
               </button>
               <button
                 type="button"
                 onClick={handleSkipLead}
-                className="block text-sm text-slate-500 underline underline-offset-2 hover:text-slate-700"
+                className="block text-sm text-[#C8F5C8] underline underline-offset-2 hover:text-white transition"
+                style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}
               >
-                Sla e-mail over en bekijk direct je resultaat
+                Sla over en bekijk direct je resultaat
               </button>
             </form>
           </section>
