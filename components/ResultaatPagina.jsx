@@ -241,10 +241,10 @@ function WILDWiel({ scores, size = 280, animated = true }) {
   const gridRadii = [0.25, 0.5, 0.75, 1];
 
   const kwadranten = [
-    { key: "doel", label: "Doel &\nStrategie", angle: -45 },
-    { key: "individu", label: "Individu &\nEigenaarschap", angle: 45 },
-    { key: "werkwijze", label: "Werkwijze &\nProces", angle: 135 },
-    { key: "lef", label: "Lef &\nCultuur", angle: -135 },
+    { key: "doel", label: "Doel", angle: -45 },
+    { key: "individu", label: "Individu", angle: 45 },
+    { key: "werkwijze", label: "Werkwijze", angle: 135 },
+    { key: "lef", label: "Lef", angle: -135 },
   ];
 
   function polarToXY(angle, r) {
@@ -263,15 +263,16 @@ function WILDWiel({ scores, size = 280, animated = true }) {
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <circle cx={cx} cy={cy} r={maxR} fill="rgba(45, 122, 58, 0.15)" />
-      <circle cx={cx} cy={cy} r={maxR * 0.7} fill="rgba(26, 77, 46, 0.12)" />
-      <circle cx={cx} cy={cy} r={maxR * 0.4} fill="rgba(200, 245, 200, 0.08)" />
+      <circle cx={cx} cy={cy} r={maxR * 1.15} fill="rgba(255, 255, 255, 0.05)" />
+      <circle cx={cx} cy={cy} r={maxR} fill="rgba(255, 255, 255, 0.04)" />
+      <circle cx={cx} cy={cy} r={maxR * 0.7} fill="rgba(255, 255, 255, 0.03)" />
+      <circle cx={cx} cy={cy} r={maxR * 0.4} fill="rgba(255, 255, 255, 0.02)" />
       {gridRadii.map((f, i) => (
-        <circle key={i} cx={cx} cy={cy} r={maxR * f} fill="none" stroke="#2A2A2A" strokeWidth={1.2} strokeDasharray="3 2" />
+        <circle key={i} cx={cx} cy={cy} r={maxR * f} fill="none" stroke="#3B3B3B" strokeWidth={1.2} strokeDasharray="3 2" />
       ))}
       {kwadranten.map(({ angle }, i) => {
         const [x, y] = polarToXY(angle, maxR);
-        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="#2A2A2A" strokeWidth={1.4} />;
+        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="#3B3B3B" strokeWidth={1.4} />;
       })}
       <path d={polygonPath} fill="#2D7A3A" fillOpacity={0.15} stroke="#2D7A3A" strokeWidth={2} strokeLinejoin="round" />
       {kwadranten.map(({ key, angle }, i) => {
@@ -281,17 +282,12 @@ function WILDWiel({ scores, size = 280, animated = true }) {
         return <circle key={i} cx={x} cy={y} r={5} fill={kleur} stroke="white" strokeWidth={2} />;
       })}
       {kwadranten.map(({ key, label, angle }) => {
-        const [x, y] = polarToXY(angle, maxR + 24);
-        const kleur = kwadrantKleuren[key];
-        const lines = label.split("\n");
-        const anchor = x < cx - 5 ? "end" : x > cx + 5 ? "start" : "middle";
+        const [rawX, y] = polarToXY(angle, maxR + 14);
+        const x = rawX < cx ? rawX + 8 : rawX - 8;
+        const anchor = rawX < cx ? "start" : "end";
         return (
-          <text key={key} x={x} y={y - (lines.length - 1) * 6} textAnchor={anchor} fontSize={9} fontFamily="var(--font-heading), 'Alfa Slab One', serif" fontWeight="400" fill={kleur} letterSpacing="0.3">
-            {lines.map((l, i) => (
-              <tspan key={i} x={x} dy={i === 0 ? 0 : 13}>
-                {l}
-              </tspan>
-            ))}
+          <text key={key} x={x} y={y} textAnchor={anchor} fontSize={13} fontFamily="var(--font-heading), 'Alfa Slab One', serif" fontWeight="400" fill="#FFFFFF" letterSpacing="0.2">
+            {label}
           </text>
         );
       })}
@@ -309,7 +305,7 @@ function ScoreBalk({ score, kleur, animated = true }) {
   }, [score, animated]);
 
   return (
-    <div className="relative h-2 bg-[#1A4D2E] rounded-full overflow-hidden">
+    <div className="relative h-2 bg-[#555555] rounded-full overflow-hidden">
       <div className="absolute inset-y-0 left-0 rounded-full transition-all duration-1000 ease-out" style={{ width: `${w}%`, background: kleur }} />
     </div>
   );
@@ -346,7 +342,7 @@ function RapportSectie({ kwadrant, data }) {
       <div className="flex items-center justify-between px-6 py-4" style={{ background: kleur }}>
         <div>
           <div className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>WILD-model</div>
-          <div className="font-semibold text-lg leading-tight" style={{ fontFamily: "var(--font-body), Inter, sans-serif", color: kleur }}>
+          <div className="font-semibold text-white text-lg leading-tight" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
             {data.label}
           </div>
         </div>
@@ -705,7 +701,7 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
                   <div key={key} className="rounded-lg p-3 mb-3" style={{ background: "#1C1C1C", borderLeft: `4px solid ${kleur}` }}>
                     <div className="flex justify-between items-center mb-1.5">
                       <div>
-                        <span className="text-sm font-semibold" style={{ color: kleur }}>{data.label}</span>
+                        <span className="text-sm font-semibold text-white">{data.label}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-xs px-2 py-0.5 rounded-full font-semibold" style={{ color: slKleur }}>
