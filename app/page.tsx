@@ -18,13 +18,12 @@ type Lead = {
 
 /* Bureautje Aap huisstijl */
 const kwadrantKleuren: Record<string, string> = {
-  lef: "#2D7A3A",
-  werkwijze: "#1A4D2E",
-  individu: "#7BC47F",
-  doel: "#111111",
+  lef: "var(--wild-lef)",
+  werkwijze: "var(--wild-werkwijze)",
+  individu: "var(--wild-individu)",
+  doel: "var(--wild-doel)",
 };
 const accent = "#C8F5C8";
-const accentHover = "#2D7A3A";
 
 export default function Home() {
   const router = useRouter();
@@ -41,6 +40,7 @@ export default function Home() {
   const currentScoreLabel = getScoreLabel(currentScore);
   const currentAnchor = getAnchorForScore(currentScore, currentQuestion.anchors);
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  const currentKwadrantKleur = kwadrantKleuren[currentQuestion.quadrantId] ?? "var(--wild-werkwijze)";
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex === questions.length - 1) {
@@ -83,7 +83,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#111111] text-white">
+    <div className="min-h-screen bg-[#111111] text-[#E8E8E8]">
       <header className="sticky top-0 z-50 bg-[#111111] border-b border-[#2A2A2A]">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <Logo />
@@ -99,11 +99,11 @@ export default function Home() {
             <p className="text-[#C8F5C8] text-[1.25rem] tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
               De WILD-scan
             </p>
-            <p className="text-white text-base max-w-[600px] mx-auto text-center leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif", lineHeight: 1.6 }}>
+            <p className="text-[#E8E8E8] text-base max-w-[600px] mx-auto text-center leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif", lineHeight: 1.6 }}>
               Deze WILD-scan is een korte momentopname van de afgelopen periode. Er zijn geen goede of
               foute antwoorden: je ontdekt waar jullie AI-adoptie al sterk is en waar groeikansen liggen.
             </p>
-            <ul className="space-y-2 rounded-2xl bg-[#1A1A1A] border border-[#2A2A2A] p-4 text-sm text-white/90">
+            <ul className="space-y-2 rounded-2xl bg-[#1C1C1C] border border-[#2A2A2A] p-4 text-sm text-[#E8E8E8]">
               <li>12 vragen verdeeld over 4 kwadranten</li>
               <li>Slider van 1 tot 10 met duidelijke betekenis per score</li>
               <li>Direct een visueel resultaat met persoonlijk feedbacksignaal</li>
@@ -122,7 +122,7 @@ export default function Home() {
                 {uitlegCopy.titel}
               </summary>
               <div className="mt-3 space-y-3">
-                <p className="text-sm leading-relaxed text-white/80">{uitlegCopy.toelichting}</p>
+                <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{uitlegCopy.toelichting}</p>
                 <Image
                   src={uitlegCopy.graphicPad}
                   alt="Visual van het WILD-model"
@@ -186,13 +186,13 @@ export default function Home() {
                 </span>
                 <span>{Math.round(progress)}%</span>
               </div>
-              <div className="h-[6px] rounded-full bg-[#1A4D2E] overflow-hidden">
+              <div className="h-[6px] rounded-full bg-[#2A2A2A] overflow-hidden">
                 <motion.div
                   className="h-full rounded-full"
                   initial={false}
                   animate={{ width: `${progress}%` }}
                   transition={{ duration: 0.35 }}
-                  style={{ background: accent }}
+                  style={{ background: currentKwadrantKleur }}
                 />
               </div>
             </div>
@@ -208,18 +208,25 @@ export default function Home() {
               >
                 <div className="space-y-3">
                   <span
-                    className="inline-flex rounded-full px-4 py-1 text-[0.8rem] font-medium uppercase tracking-[0.1em] text-white"
-                    style={{ background: kwadrantKleuren[currentQuestion.quadrantId] ?? "#2D7A3A", fontFamily: "var(--font-body), Inter, sans-serif" }}
+                    className="inline-flex rounded-md px-3 py-1 text-[0.75rem] uppercase"
+                    style={{
+                      background: `color-mix(in srgb, ${currentKwadrantKleur} 20%, transparent)`,
+                      borderLeft: `3px solid ${currentKwadrantKleur}`,
+                      color: currentKwadrantKleur,
+                      fontFamily: "var(--font-body), Inter, sans-serif",
+                      fontWeight: 600,
+                      letterSpacing: "0.08em",
+                    }}
                   >
                     {currentQuestion.id} · {quadrants.find((item) => item.id === currentQuestion.quadrantId)?.name}
                   </span>
-                  <h2 className="text-white text-[1.4rem]" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>{currentQuestion.title}</h2>
-                  <p className="leading-relaxed text-[#C8F5C8] text-[0.95rem] italic" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>{currentQuestion.prompt}</p>
+                  <h2 className="text-[#E8E8E8]" style={{ fontFamily: "var(--font-body), Inter, sans-serif", fontWeight: 600, fontSize: "1.3rem" }}>{currentQuestion.title}</h2>
+                  <p className="leading-relaxed italic" style={{ fontFamily: "var(--font-body), Inter, sans-serif", color: "var(--color-text-secondary)", fontSize: "1rem" }}>{currentQuestion.prompt}</p>
                 </div>
 
-                <div className="rounded-2xl border border-[#2A2A2A] bg-[#1A1A1A] p-4 sm:p-5">
-                  <label htmlFor="score" className="mb-3 block text-sm font-medium text-white">
-                    Jouw score: <span className="font-semibold" style={{ color: accent }}>{currentScore}</span>
+                <div className="rounded-2xl border border-[#2A2A2A] bg-[#1C1C1C] p-4 sm:p-5">
+                  <label htmlFor="score" className="mb-3 block text-sm font-medium text-[#E8E8E8]">
+                    Jouw score: <span className="font-semibold" style={{ color: currentKwadrantKleur }}>{currentScore}</span>
                   </label>
                   <input
                     id="score"
@@ -232,24 +239,21 @@ export default function Home() {
                       setAnswers((prev) => prev.map((score, index) => (index === currentQuestionIndex ? newValue : score)));
                     }}
                     className="h-4 w-full cursor-pointer"
-                    style={{ ["--kwadrant-thumb" as string]: kwadrantKleuren[currentQuestion.quadrantId] ?? accent } as React.CSSProperties}
+                    style={{ ["--kwadrant-thumb" as string]: currentKwadrantKleur } as React.CSSProperties}
                   />
-                  <div className="mt-4 rounded-xl border border-[#2A2A2A] p-3 bg-[#111111]">
-                    <p className="text-sm font-semibold text-white">
-                      Betekenis
-                    </p>
-                    <p className="mt-1 text-sm text-[#C8F5C8]">
+                  <div className="mt-4 rounded-xl p-3 bg-[#1C1C1C]" style={{ borderLeft: `3px solid ${currentKwadrantKleur}`, borderTop: "1px solid #2A2A2A", borderRight: "1px solid #2A2A2A", borderBottom: "1px solid #2A2A2A" }}>
+                    <p className="text-base text-[#E8E8E8]" style={{ lineHeight: 1.6 }}>
                       {currentScoreLabel} · {currentAnchor.text}
                     </p>
                   </div>
-                  <div className="mt-3 flex flex-wrap gap-2 text-[0.8rem]" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+                  <div className="mt-4 flex flex-wrap gap-2 text-[0.8rem]" style={{ fontFamily: "var(--font-body), Inter, sans-serif", color: "#A0A0A0", fontWeight: 400 }}>
                     {currentQuestion.anchors.map((a) => {
                       const isActive = currentAnchor.key === a.key;
                       return (
                         <span
                           key={a.key}
                           className={isActive ? "font-semibold" : ""}
-                          style={{ color: isActive ? accent : "#888888" }}
+                          style={{ color: isActive ? currentKwadrantKleur : "#A0A0A0", fontWeight: isActive ? 600 : 400 }}
                         >
                           {a.label}
                         </span>
@@ -261,13 +265,12 @@ export default function Home() {
                 <div
                   className="rounded-lg p-4"
                   style={{
-                    background: "rgba(45, 122, 58, 0.12)",
-                    border: "1px solid rgba(45, 122, 58, 0.35)",
+                    background: `color-mix(in srgb, ${currentKwadrantKleur} 10%, transparent)`,
+                    border: `1px solid color-mix(in srgb, ${currentKwadrantKleur} 30%, transparent)`,
                     boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
                   }}
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[#C8F5C8]" aria-hidden>💡</span>
                     <p className="text-[0.75rem] font-semibold uppercase tracking-widest" style={{ color: accent, fontFamily: "var(--font-body), Inter, sans-serif" }}>
                       Weetje
                     </p>
@@ -345,7 +348,7 @@ export default function Home() {
 
         {step === "lead" && (
           <section className="space-y-6">
-            <h2 className="text-2xl font-semibold text-white" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>Ontvang je resultaten en uitgebreide rapport</h2>
+            <h2 className="text-2xl font-semibold text-white" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>Ontvang je resultaten en uitgebreide rapport</h2>
             <p className="text-white/90" style={{ fontFamily: "var(--font-body), Inter, sans-serif", lineHeight: 1.6 }}>
               Vul je naam en e-mailadres in. Dan kun je direct door naar je WILD-resultaat en is de
               e-mailafhandeling voorbereid voor verzending.

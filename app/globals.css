@@ -3,17 +3,20 @@
 :root {
   /* Bureautje Aap huisstijl */
   --background: #111111;
-  --background-secondary: #D8F5D8;
-  --foreground: #FFFFFF;
+  --background-secondary: #1C1C1C;
+  --foreground: #E8E8E8;
+  --color-text-secondary: #A0A0A0;
   --foreground-light: #111111;
   --accent: #C8F5C8;
   --accent-hover: #2D7A3A;
+  --card-background: #1C1C1C;
+  --card-border: #2A2A2A;
 
   /* Kwadrantkleuren */
-  --kwadrant-lef: #2D7A3A;
-  --kwadrant-werkwijze: #1A4D2E;
-  --kwadrant-individu: #7BC47F;
-  --kwadrant-doel: #111111;
+  --wild-lef: #C4603A;
+  --wild-individu: #C49A3A;
+  --wild-werkwijze: #2D7A3A;
+  --wild-doel: #1A5C6B;
 
   /* Scorebanden */
   --score-urgent: #B03A2E;
@@ -40,10 +43,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), Inter, sans-serif;
-}
-
-h1, h2, h3 {
-  font-family: var(--font-heading), "Alfa Slab One", serif;
 }
 
 p, label, button {

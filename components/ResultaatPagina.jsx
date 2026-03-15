@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Logo from "@/components/Logo";
 import emailjs from "@emailjs/browser";
 import { useState, useEffect, useRef } from "react";
@@ -17,10 +16,10 @@ const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? "VERVANG_MET_BUREAUT
 /* Bureautje Aap huisstijl */
 const accent = "#C8F5C8";
 const kwadrantKleuren = {
-  lef: "#2D7A3A",
-  werkwijze: "#1A4D2E",
-  individu: "#7BC47F",
-  doel: "#111111",
+  lef: "#C4603A",
+  werkwijze: "#2D7A3A",
+  individu: "#C49A3A",
+  doel: "#1A5C6B",
 };
 
 const defaultScores = {
@@ -287,7 +286,7 @@ function WILDWiel({ scores, size = 280, animated = true }) {
         const lines = label.split("\n");
         const anchor = x < cx - 5 ? "end" : x > cx + 5 ? "start" : "middle";
         return (
-          <text key={key} x={x} y={y - (lines.length - 1) * 6} textAnchor={anchor} fontSize={9} fontFamily="Inter, sans-serif" fontWeight="600" fill={kleur} letterSpacing="0.3">
+          <text key={key} x={x} y={y - (lines.length - 1) * 6} textAnchor={anchor} fontSize={9} fontFamily="var(--font-heading), 'Alfa Slab One', serif" fontWeight="400" fill={kleur} letterSpacing="0.3">
             {lines.map((l, i) => (
               <tspan key={i} x={x} dy={i === 0 ? 0 : 13}>
                 {l}
@@ -324,10 +323,10 @@ function SignaalKaart({ type, titel, tekst, kleur, icon }) {
         <div className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: accent }}>
           {type}
         </div>
-        <div className="font-bold text-white mb-1 text-sm leading-snug" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>
+        <div className="font-semibold text-[#E8E8E8] mb-1 text-sm leading-snug" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
           {titel}
         </div>
-        <div className="text-white/80 text-sm leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>{tekst}</div>
+        <div className="text-[#E8E8E8] text-sm leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>{tekst}</div>
       </div>
     </div>
   );
@@ -343,23 +342,23 @@ function RapportSectie({ kwadrant, data }) {
 
   const slKleur = scoreWoordKleur(sl.label);
   return (
-    <div className="mb-8 rounded-lg overflow-hidden" style={{ background: "#1A1A1A", borderLeft: `4px solid ${kleur}`, boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
+    <div className="mb-6 rounded-lg overflow-hidden" style={{ background: "#1C1C1C", borderLeft: `4px solid ${kleur}`, boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
       <div className="flex items-center justify-between px-6 py-4" style={{ background: kleur }}>
         <div>
           <div className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>WILD-model</div>
-          <div className="text-white font-bold text-lg leading-tight" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>
+          <div className="font-semibold text-lg leading-tight" style={{ fontFamily: "var(--font-body), Inter, sans-serif", color: kleur }}>
             {data.label}
           </div>
         </div>
         <div className="text-right">
-          <div className="text-white text-3xl font-black" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>
+          <div className="text-white text-3xl font-black" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
             {data.score.toFixed(1)}
           </div>
           <div className="text-white/80 text-xs font-medium" style={{ color: slKleur }}>{sl.label}</div>
         </div>
       </div>
 
-      <div className="px-6 py-5" style={{ background: "#1A1A1A" }}>
+      <div className="px-6 py-6" style={{ background: "#1C1C1C" }}>
         <div className="mb-5">
           <div className="text-xs text-white/60 font-semibold uppercase tracking-wider mb-3" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>Scores per vraag</div>
           <div className="space-y-2">
@@ -378,10 +377,10 @@ function RapportSectie({ kwadrant, data }) {
         </div>
 
         <div className="rounded-lg p-4 mb-4 border border-[#2A2A2A]">
-          <div className="text-sm font-bold mb-2 italic" style={{ color: accent, fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>
+          <div className="text-sm font-semibold mb-2 italic" style={{ color: accent, fontFamily: "var(--font-body), Inter, sans-serif" }}>
             &quot;{tip.kort}&quot;
           </div>
-          <p className="text-white/80 text-sm leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>{tip.lang}</p>
+          <p className="text-[#E8E8E8] text-sm leading-relaxed" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>{tip.lang}</p>
         </div>
 
         <div className="flex gap-3 items-start">
@@ -390,7 +389,7 @@ function RapportSectie({ kwadrant, data }) {
           </div>
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-white/60 mb-1" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>Wat speelt hier</div>
-            <p className="text-white/90 text-sm font-medium" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>{watSpeeltHier}</p>
+            <p className="text-[#E8E8E8] text-sm font-medium" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>{watSpeeltHier}</p>
             <p className="mt-2 text-xs text-white/60">
               De hoogste score binnen dit kwadrant: {hoogsteVraagLabel} ({hoogsteScore})
             </p>
@@ -410,7 +409,6 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [emailInput, setEmailInput] = useState(email ?? "");
   const [mailError, setMailError] = useState("");
-  const [toonBoekFallback, setToonBoekFallback] = useState(false);
   const adminMailSentRef = useRef(false);
 
   const sterk = sterksteKwadrant(veiligeScores);
@@ -447,14 +445,14 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
 
   const dominanteKleur =
     beste.dominantKwadrant === "s"
-      ? "#2D7A3A"
+      ? "#C4603A"
       : beste.dominantKwadrant === "p"
-        ? "#1A4D2E"
+        ? "#2D7A3A"
         : beste.dominantKwadrant === "st"
-          ? "#7BC47F"
+          ? "#C49A3A"
           : beste.dominantKwadrant === "m"
-            ? "#111111"
-            : "#111111";
+            ? "#1A5C6B"
+            : "#2D7A3A";
   const zekerheidTekst =
     zekerheid > 70
       ? "Duidelijke match"
@@ -554,7 +552,6 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
           archetype_tip_titel: actieveArchetypeTip.titel,
           archetype_tip_tekst: actieveArchetypeTip.tip,
           archetype_tip_bron: actieveArchetypeTip.bron,
-          ebook_tip_label: "Onze beste tip op basis van jouw persoonlijke scan",
           archetype_top2_naam: archetypeTop3[1].naam,
           archetype_top2_tagline: archetypeTop3[1].tagline,
           archetype_top3_naam: archetypeTop3[2].naam,
@@ -598,7 +595,7 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
   }, [skipLead]);
 
   return (
-    <div className="min-h-screen bg-[#111111]" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
+    <div className="min-h-screen bg-[#111111]" style={{ fontFamily: "var(--font-body), Inter, sans-serif", color: "#E8E8E8" }}>
       <header className="sticky top-0 z-50 bg-[#111111] border-b border-[#2A2A2A]">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <Logo />
@@ -606,19 +603,21 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-4 py-8">
+      <main className="max-w-[680px] mx-auto px-4 py-8">
         <div className="mb-8">
           <div className="text-center mb-6">
             <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: accent }}>
               AI Adoptie Profiel
             </div>
-            <h1 className="text-3xl font-black text-white leading-tight mb-2" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>
+            <h1 className="text-3xl font-black text-white leading-tight mb-2" style={{ fontFamily: "var(--font-body), Inter, sans-serif", fontWeight: 600 }}>
               {naam ? `Goed gedaan, ${naam}` : "Jouw team in beeld"}
             </h1>
-            <p className="text-white/70 text-sm">Momentopname met de WILD-scan · {new Date().toLocaleDateString("nl-NL", { day: "numeric", month: "long" })}</p>
+            <p className="text-[#A0A0A0] text-sm">Momentopname met de WILD-scan · {new Date().toLocaleDateString("nl-NL", { day: "numeric", month: "long" })}</p>
           </div>
 
-          <div className="rounded-lg p-6 mb-5" style={{ background: dominanteKleur, boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
+          <div className="rounded-lg mb-6 overflow-hidden border border-[#2A2A2A]" style={{ background: "#1C1C1C", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
+            <div style={{ height: 4, background: dominanteKleur, width: "100%" }} />
+            <div className="p-6">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-2 text-white/80" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
               {rapportCopy.archetypeIntroBadge}
             </p>
@@ -648,70 +647,65 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
                 {rapportCopy.archetypeTop3Label} <strong>1.</strong> {beste.naam} · <strong>2.</strong> {runner1.naam} · <strong>3.</strong> {runner2.naam}
               </p>
             </div>
-          </div>
-
-          <div className="rounded-lg p-5 mb-5 border border-[#2A2A2A]" style={{ background: "#1A1A1A", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
-            <div className="flex items-start gap-4">
-              <div className="flex-1">
-                <p className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide text-[#C8F5C8] border border-[#2A2A2A]">
-                  <span aria-hidden="true">📘</span>
-                  Onze beste tip op basis van jouw persoonlijke scan
-                </p>
-                <h3 className="mt-3 font-bold text-white text-lg leading-snug" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>
-                  {actieveArchetypeTip.titel}
-                </h3>
-                <p className="mt-2 text-sm text-white/90">{actieveArchetypeTip.tip}</p>
-                <p className="mt-3 text-xs italic text-white/60">Uit: Positief Leiderschap — 25 Krachtige Acties · {actieveArchetypeTip.bron}</p>
-                <div className="mt-3 rounded-lg border border-[#2A2A2A] px-3 py-2 text-xs text-white/80" style={{ background: "#111111" }}>
-                  Je ontvangt dit e-book gratis bij de bespreking van jouw scan.
-                </div>
-              </div>
-              <div className="hidden sm:block flex-shrink-0">
-                {toonBoekFallback ? (
-                  <div className="w-24 h-36 rounded-md border border-[#2A2A2A] shadow-sm bg-[#2D7A3A] text-white text-xs font-semibold flex items-center justify-center text-center px-2">
-                    Positief Leiderschap
-                  </div>
-                ) : (
-                  <Image
-                    src="/images/voorkant-ebook-25-tips-positief-leiderschap.png"
-                    alt="Cover van 25 Krachtige Acties voor Positief Leiderschap"
-                    width={96}
-                    height={140}
-                    className="rounded-md border border-[#2A2A2A] object-cover shadow-sm"
-                    onError={() => setToonBoekFallback(true)}
-                  />
-                )}
-              </div>
             </div>
           </div>
 
-          <div className="rounded-lg p-6 mb-5 border border-[#2A2A2A]" style={{ background: "#1A1A1A", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
+          <div className="rounded-lg p-6 mb-6" style={{ background: "#1C1C1C", border: "1px solid #2A2A2A", borderLeft: "4px solid #C8F5C8", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
+            <h3 className="text-lg text-[#E8E8E8]" style={{ fontFamily: "var(--font-body), Inter, sans-serif", fontWeight: 600 }}>
+              {actieveArchetypeTip.titel}
+            </h3>
+            <p className="mt-2 text-base text-[#E8E8E8]" style={{ lineHeight: 1.7 }}>
+              {actieveArchetypeTip.tip}
+            </p>
+            <div className="mt-4">
+              <p className="text-sm text-[#E8E8E8] leading-relaxed">
+                Wil je hier dieper op ingaan? Plan een gratis WILD-sessie van 20 minuten en we kijken samen wat dit profiel voor jullie betekent.
+              </p>
+              <a
+                href=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                    window.Calendly.initPopupWidget({
+                      url: "https://calendly.com/bureautjeaap/wild-scan",
+                    });
+                  }
+                }}
+                className="inline-block mt-4 px-8 py-3 rounded-full text-base font-semibold transition hover:bg-[#2D7A3A] hover:text-white"
+                style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
+              >
+                Plan een WILD-sessie
+              </a>
+            </div>
+          </div>
+
+          <div className="rounded-lg p-6 py-10 mb-6 border border-[#2A2A2A]" style={{ background: "#1C1C1C", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
             <div className="flex flex-col items-center">
               <WILDWiel scores={veiligeScores} size={280} animated />
               <div className="mt-4 text-center">
-                <div className="text-5xl font-black" style={{ color: scoreWoordKleur(gemSl.label), fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>
+                <div className="text-5xl font-black" style={{ color: scoreWoordKleur(gemSl.label), fontFamily: "var(--font-body), Inter, sans-serif" }}>
                   {gem.toFixed(1)}
                 </div>
                 <div className="text-sm font-semibold mt-1" style={{ color: scoreWoordKleur(gemSl.label) }}>
                   {gemSl.label}
                 </div>
-                <div className="text-white/60 text-xs mt-1">gemiddelde over alle WILD-domeinen</div>
+                <div className="text-[#A0A0A0] text-xs mt-1">gemiddelde over alle WILD-domeinen</div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-lg p-5 mb-5 border border-[#2A2A2A]" style={{ background: "#1A1A1A", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
-            <div className="text-xs font-semibold uppercase tracking-widest text-white/60 mb-4">Per kwadrant</div>
+          <div className="rounded-lg p-6 py-10 mb-6 border border-[#2A2A2A]" style={{ background: "#1C1C1C", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
+            <div className="text-xs uppercase tracking-widest text-[#A0A0A0] mb-4" style={{ fontWeight: 600 }}>Per kwadrant</div>
             <div className="space-y-4">
               {Object.entries(veiligeScores).map(([key, data]) => {
                 const kleur = kwadrantKleuren[key];
                 const sl = scoreLabel(data.score);
                 const slKleur = scoreWoordKleur(sl.label);
                 return (
-                  <div key={key} className="rounded-lg p-3 mb-3" style={{ background: "#1A1A1A", borderLeft: `4px solid ${kleur}` }}>
+                  <div key={key} className="rounded-lg p-3 mb-3" style={{ background: "#1C1C1C", borderLeft: `4px solid ${kleur}` }}>
                     <div className="flex justify-between items-center mb-1.5">
                       <div>
-                        <span className="text-sm font-semibold text-white">{data.label}</span>
+                        <span className="text-sm font-semibold" style={{ color: kleur }}>{data.label}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-xs px-2 py-0.5 rounded-full font-semibold" style={{ color: slKleur }}>
@@ -741,9 +735,9 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
             />
           </div>
 
-          <div className="rounded-lg p-4 mb-6 text-center border border-[#2A2A2A]" style={{ background: "#1A1A1A" }}>
-            <p className="text-white/70 text-xs leading-relaxed">
-              <span className="font-semibold text-white">Een 10 is niet het doel.</span> {rapportCopy.balansZin}
+          <div className="rounded-lg p-4 mb-6 text-center border border-[#2A2A2A]" style={{ background: "#1C1C1C" }}>
+            <p className="text-[#A0A0A0] text-xs leading-relaxed">
+              <span className="font-semibold text-[#E8E8E8]">Een 10 is niet het doel.</span> {rapportCopy.balansZin}
             </p>
           </div>
         </div>
@@ -751,7 +745,7 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
           <div className="mt-4 mb-8">
             <div className="flex items-center gap-3 mb-6">
               <div className="flex-1 h-px bg-[#2A2A2A]" />
-              <div className="text-xs font-semibold uppercase tracking-widest text-white/60 px-2">Volledig rapport per kwadrant</div>
+              <div className="text-xs uppercase tracking-widest text-[#A0A0A0] px-2" style={{ fontWeight: 600 }}>Volledig rapport per kwadrant</div>
               <div className="flex-1 h-px bg-[#2A2A2A]" />
             </div>
 
@@ -759,12 +753,12 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
             <RapportSectie key={key} kwadrant={key} data={veiligeScores[key]} />
           ))}
 
-          <div className="rounded-lg border border-[#2A2A2A] p-5 mb-6" style={{ background: "#1A1A1A", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/60 mb-2">{rapportCopy.alternatieveProfielenTitel}</p>
-            <h3 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>
+          <div className="rounded-lg border border-[#2A2A2A] p-6 py-10 mb-6" style={{ background: "#1C1C1C", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
+            <p className="text-xs uppercase tracking-widest text-[#A0A0A0] mb-2" style={{ fontWeight: 600 }}>{rapportCopy.alternatieveProfielenTitel}</p>
+            <h3 className="text-xl font-semibold text-[#E8E8E8]" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>
               {rapportCopy.alternatieveProfielenSubtitel}
             </h3>
-            <p className="text-sm text-white/80 mt-2">
+            <p className="text-sm text-[#E8E8E8] mt-2">
               Naast jullie hoofdprofiel <strong>{beste.naam}</strong> zijn er twee andere typeringen waar jullie team zich mogelijk ook in herkent.
             </p>
             <div className="mt-3 grid gap-3">
@@ -777,40 +771,15 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
                 <p className="italic mt-1 text-[#C8F5C8]">{runner2.tagline}</p>
               </div>
             </div>
-            <p className="mt-3 text-xs text-white/60">
+            <p className="mt-3 text-xs text-[#A0A0A0]">
               Top 3 passende organisatietypen: 1. {beste.naam} · 2. {runner1.naam} · 3. {runner2.naam}
             </p>
           </div>
 
-          <div className="rounded-lg p-6 mb-6 border-2" style={{ borderColor: accent, background: "rgba(200, 245, 200, 0.08)", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: accent }}>AI-gesprek</p>
-            <h3 className="font-black text-white text-xl mb-2" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>
-              AI-gesprek over jullie uitslag?
-            </h3>
-            <p className="text-sm text-white/90 leading-relaxed">
-              {rapportCopy.sparringBody}
-            </p>
-            <a
-              href=""
-              onClick={(e) => {
-                e.preventDefault();
-                if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
-                  window.Calendly.initPopupWidget({
-                    url: "https://calendly.com/bureautjeaap/wild-scan",
-                  });
-                }
-              }}
-              className="inline-block mt-4 px-8 py-3 rounded-full text-base font-semibold transition hover:bg-[#2D7A3A] hover:text-white"
-              style={{ background: accent, color: "#111111", fontFamily: "var(--font-body), Inter, sans-serif" }}
-            >
-              Plan een WILD-sessie
-            </a>
-          </div>
-
-          <div className="rounded-lg overflow-hidden mb-6 border border-[#2A2A2A]" style={{ background: "#1A1A1A", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
+          <div className="rounded-lg overflow-hidden mb-6 border border-[#2A2A2A]" style={{ background: "#1C1C1C", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
             <div className="p-6">
-              <h3 className="font-semibold text-white text-sm mb-1" style={{ fontFamily: "var(--font-heading), 'Alfa Slab One', serif" }}>Ontvang dit rapport in je mailbox</h3>
-              <p className="text-white/70 text-xs mb-3 leading-relaxed">We sturen je resultaten direct naar je inbox.</p>
+              <h3 className="font-semibold text-[#E8E8E8] text-sm mb-1" style={{ fontFamily: "var(--font-body), Inter, sans-serif" }}>Ontvang dit rapport in je mailbox</h3>
+              <p className="text-[#A0A0A0] text-xs mb-3 leading-relaxed">We sturen je resultaten direct naar je inbox.</p>
               {emailVerzonden ? (
                 <div className="rounded-lg p-4 text-center border border-[#2A2A2A]" style={{ background: "rgba(45, 122, 58, 0.2)" }}>
                   <div className="text-2xl mb-1">✓</div>
