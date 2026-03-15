@@ -60,10 +60,10 @@ export default function Home() {
 
   const buildReportUrl = (includeEmail = true) => {
     const v = encodeAnswersToV(answers);
-    const n = encodeURIComponent(lead.name);
-    const e = includeEmail ? encodeURIComponent(lead.email) : "";
+    const n = lead.name;
+    const e = includeEmail ? lead.email : "";
     const i = intakeAnswer ? encodeIntakeAnswer(intakeAnswer) : "";
-    const g = encodeURIComponent(gespreksopenerText);
+    const g = gespreksopenerText;
     const params = new URLSearchParams({ v, n });
     if (e) params.set("e", e);
     if (i) params.set("i", i);

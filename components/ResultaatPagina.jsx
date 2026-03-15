@@ -400,12 +400,34 @@ function RapportSectie({ kwadrant, data }) {
  * @param {{ scores?: ResultaatScores | null, naam?: string, email?: string, answers?: number[], intakeAnswer?: "ja" | "nee" | "deels" | null, gespreksopener?: string, skipLead?: boolean }} props
  */
 export default function ResultaatPagina({ scores = null, naam = "", email = "", answers = [], intakeAnswer = null, gespreksopener = "", skipLead = false }) {
+  const decodeIfEncoded = (value) => {
+    if (!value || typeof value !== "string") return "";
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
+  };
   const veiligeScores = scores ?? defaultScores;
   const [emailVerzonden, setEmailVerzonden] = useState(false);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
-  const [emailInput, setEmailInput] = useState(email ?? "");
+  const [emailInput, setEmailInput] = useState(decodeIfEncoded(email));
   const [mailError, setMailError] = useState("");
+  const [mailDebugSteps, setMailDebugSteps] = useState([]);
   const adminMailSentRef = useRef(false);
+  const pushMailDebug = (label, status = "info", detail = "") => {
+    const at = new Date().toLocaleTimeString("nl-NL");
+    setMailDebugSteps((prev) => [...prev, { at, label, status, detail }]);
+  };
+  const parseEmailJsError = (error) => {
+    if (!error) return "Onbekende fout";
+    if (typeof error === "string") return error;
+    if (error instanceof Error) return error.message;
+    const status = error?.status ? `status=${error.status}` : "";
+    const text = error?.text ? `text=${error.text}` : "";
+    const message = [status, text].filter(Boolean).join(" | ");
+    return message || JSON.stringify(error);
+  };
 
   const sterk = sterksteKwadrant(veiligeScores);
   const zwak = zwaksteKwadrant(veiligeScores);
@@ -492,46 +514,73 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
   const signaalGroeikans = `${veiligeScores[zwak[0]].label}: ${tips[zwak[0]].kort}`;
   const signaalOpvallend = `${veiligeScores[verr[0]].label}: scoort ${verr[1].score.toFixed(1)} - ${Math.abs(verr[1].score - gem) > 1.5 ? "opvallend afwijkend van jullie gemiddelde." : "iets om in de gaten te houden."}`;
 
-  async function sendAdminMail() {
+  async function sendAdminMail(withDebug = false) {
     if (adminMailSentRef.current) return;
     adminMailSentRef.current = true;
-    await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_ADMIN_TEMPLATE_ID,
-      {
-        participant_name: naam || "Onbekend",
-        participant_email: emailInput || "Niet ingevuld (skip)",
-        to_email: ADMIN_EMAIL,
-        reply_to: emailInput || ADMIN_EMAIL,
-        rapport_link: rapportLink,
-        quadrant_scores: quadrantSummary,
-        strongest_quadrant: veiligeScores[sterk[0]].label,
-        admin_email: ADMIN_EMAIL,
-        answers: antwoordenSamenvatting,
-        archetype_top1_naam: archetypeTop3[0].naam,
-        archetype_tip_titel: actieveArchetypeTip.titel,
-        archetype_tip_tekst: actieveArchetypeTip.tip,
-        archetype_tip_bron: actieveArchetypeTip.bron,
-        archetype_top2_naam: archetypeTop3[1].naam,
-        archetype_top3_naam: archetypeTop3[2].naam,
-        archetype_zekerheid: `${zekerheid}%`,
-        archetype_default_waarschuwing: defaultWaarschuwing,
-        laag1_samenvatting: laag1Samenvatting,
-        laag2_samenvatting: laag2Samenvatting,
-        laag3_samenvatting: laag3Samenvatting,
-        kwadrant_rapport_volledig: kwadrantRapportVolledig,
-        intake_answer: intakeAnswer ? `Intake: ${intakeAnswer}` : "",
-        gespreksopener: gespreksopener || "",
-      },
-      { publicKey: EMAILJS_PUBLIC_KEY },
-    );
+    try {
+      if (withDebug) pushMailDebug("Admin mail: verzenden gestart");
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_ADMIN_TEMPLATE_ID,
+        {
+          participant_name: naam || "Onbekend",
+          participant_email: emailInput || "Niet ingevuld (skip)",
+          to_email: ADMIN_EMAIL,
+          reply_to: emailInput || ADMIN_EMAIL,
+          rapport_link: rapportLink,
+          quadrant_scores: quadrantSummary,
+          strongest_quadrant: veiligeScores[sterk[0]].label,
+          admin_email: ADMIN_EMAIL,
+          answers: antwoordenSamenvatting,
+          archetype_top1_naam: archetypeTop3[0].naam,
+          archetype_tip_titel: actieveArchetypeTip.titel,
+          archetype_tip_tekst: actieveArchetypeTip.tip,
+          archetype_tip_bron: actieveArchetypeTip.bron,
+          archetype_top2_naam: archetypeTop3[1].naam,
+          archetype_top3_naam: archetypeTop3[2].naam,
+          archetype_zekerheid: `${zekerheid}%`,
+          archetype_default_waarschuwing: defaultWaarschuwing,
+          laag1_samenvatting: laag1Samenvatting,
+          laag2_samenvatting: laag2Samenvatting,
+          laag3_samenvatting: laag3Samenvatting,
+          kwadrant_rapport_volledig: kwadrantRapportVolledig,
+          intake_answer: intakeAnswer ? `Intake: ${intakeAnswer}` : "",
+          gespreksopener: gespreksopener || "",
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY },
+      );
+      if (withDebug) pushMailDebug("Admin mail: verzonden", "success");
+    } catch (error) {
+      const parsed = parseEmailJsError(error);
+      if (withDebug) pushMailDebug("Admin mail: fout", "error", parsed);
+      throw error;
+    }
   }
 
   async function handleRapportAanvragen() {
     setMailError("");
+    setMailDebugSteps([]);
     setIsSendingEmail(true);
+    pushMailDebug("Start rapportverzending");
 
     try {
+      if (
+        !EMAILJS_SERVICE_ID ||
+        !EMAILJS_USER_TEMPLATE_ID ||
+        !EMAILJS_ADMIN_TEMPLATE_ID ||
+        !EMAILJS_PUBLIC_KEY ||
+        EMAILJS_SERVICE_ID.includes("VERVANG_MET") ||
+        EMAILJS_USER_TEMPLATE_ID.includes("VERVANG_MET") ||
+        EMAILJS_ADMIN_TEMPLATE_ID.includes("VERVANG_MET") ||
+        EMAILJS_PUBLIC_KEY.includes("VERVANG_MET")
+      ) {
+        throw new Error("EmailJS configuratie ontbreekt of bevat placeholderwaarden.");
+      }
+      if (!emailInput || !emailInput.includes("@")) {
+        throw new Error(`Ongeldig e-mailadres: ${emailInput || "(leeg)"}`);
+      }
+      pushMailDebug("Configuratie gecheckt", "success");
+      pushMailDebug("User mail: verzenden gestart");
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_USER_TEMPLATE_ID,
@@ -572,13 +621,15 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
         },
         { publicKey: EMAILJS_PUBLIC_KEY },
       );
+      pushMailDebug("User mail: verzonden", "success");
 
-      await sendAdminMail();
+      await sendAdminMail(true);
 
       setEmailVerzonden(true);
     } catch (error) {
-      const msg = error instanceof Error ? error.message : String(error);
+      const msg = parseEmailJsError(error);
       setMailError(msg);
+      pushMailDebug("Proces gestopt door fout", "error", msg);
       setEmailVerzonden(false);
     } finally {
       setIsSendingEmail(false);
@@ -588,8 +639,9 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
   useEffect(() => {
     if (!skipLead || adminMailSentRef.current) return;
     sendAdminMail().catch((error) => {
-      const msg = error instanceof Error ? error.message : String(error);
+      const msg = parseEmailJsError(error);
       setMailError(msg);
+      pushMailDebug("Auto admin-mail (skip): fout", "error", msg);
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skipLead]);
@@ -808,6 +860,18 @@ export default function ResultaatPagina({ scores = null, naam = "", email = "", 
                     </button>
                   </div>
                   {mailError && <p className="text-xs text-red-400 break-all">EmailJS fout: {mailError}</p>}
+                  {mailDebugSteps.length > 0 && (
+                    <div className="rounded-lg border border-[#2A2A2A] bg-[#111111] p-3">
+                      <p className="text-xs font-semibold uppercase tracking-widest text-[#A0A0A0] mb-2">EmailJS debug</p>
+                      <div className="space-y-1">
+                        {mailDebugSteps.map((step, idx) => (
+                          <p key={`${step.at}-${idx}`} className="text-xs" style={{ color: step.status === "error" ? "#ff8a80" : step.status === "success" ? "#81c784" : "#A0A0A0" }}>
+                            [{step.at}] {step.label}{step.detail ? ` — ${step.detail}` : ""}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
